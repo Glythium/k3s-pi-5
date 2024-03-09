@@ -1,3 +1,16 @@
+.vscode/*
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+# !.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
 # A temporary GitRepo Flux source used to quickly check the GitOps-ability of branches
 # Meant to be manually applied and removed without messing with the main source
 dev-git.yaml
