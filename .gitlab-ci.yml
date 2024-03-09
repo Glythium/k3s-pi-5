@@ -1,5 +1,6 @@
 stages:
 - test-runner
+- secret-scanning
 - yaml-validation
 
 # Test Runner Stage
@@ -10,6 +11,17 @@ test-runner:
   image: alpine
   script:
   - echo "The runner works!"
+
+
+# Secret Scanning Stage
+trufflehog-scan:
+  stage: secret-scanning
+  tags:
+  - pi5
+  image: trufflesecurity/trufflehog
+  script:
+  - trufflehog git file://. --since-commit main --branch ${CI_COMMIT_BRANCH} --fail
+  - trufflehog filesystem . --only-verified --fail
 
 
 # Validate YAML Stage
