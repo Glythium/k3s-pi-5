@@ -57,6 +57,11 @@ spec:
     rbac:
       create: true
       clusterWideAccess: true
+      rules:
+      - apiGroups: ["*"]
+        resources: ["*"]
+        verbs: ["*"]
+
 
     secrets:
     - name: gitlab-runner-token

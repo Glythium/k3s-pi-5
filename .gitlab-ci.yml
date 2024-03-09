@@ -1,6 +1,8 @@
 stages:
 - test-runner
+- yaml-validation
 
+# Test Runner Stage
 test-runner:
   stage: test-runner
   tags:
@@ -8,3 +10,27 @@ test-runner:
   image: alpine
   script:
   - echo "The runner works!"
+
+
+# Validate YAML Stage
+server-side-validation:
+  stage: yaml-validation
+  tags:
+  - pi5
+  image: bitnami/kubectl
+  script:
+  - for yaml in $(find . -name *.yaml); do
+      kubectl apply -f "${yaml}" --dry-run=server;
+      echo;
+    done
+
+diff-yaml:
+  stage: yaml-validation
+  tags:
+  - pi5
+  image: bitnami/kubectl
+  script:
+  - for yaml in $(find . -name *.yaml); do
+      kubectl diff -f "${yaml}";
+      echo;
+    done
