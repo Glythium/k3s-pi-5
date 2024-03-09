@@ -1,0 +1,62 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: gitlab-runner
+  namespace: flux-system
+spec:
+  force: false
+  interval: 5m
+  path: ./services/gitlab-runner
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: initial-git-source
+  targetNamespace: flux-system
+  timeout: 1m
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: gitlab
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://charts.gitlab.io
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: gitlab-runner
+  namespace: flux-system
+spec:
+  interval: 5m
+  timeout: 5m
+  targetNamespace: gitlab-runner
+  chart:
+    spec:
+      chart: gitlab-runner
+      version: '*'
+      sourceRef:
+        kind: HelmRepository
+        name: gitlab
+      interval: 5m
+  releaseName: gitlab-runner
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  driftDetection:
+    mode: enabled
+  values:
+    gitlabUrl: https://gitlab.com
+    rbac:
+      create: true
+      clusterWideAccess: true
+    secrets:
+    - name: gitlab-runner-token
+
+
