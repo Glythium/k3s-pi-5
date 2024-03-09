@@ -1,0 +1,13 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: initial-git-source
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  url: https://gitlab.com/Glythium/k3s-pi-5.git
+  ref:
+    branch: main
+  secretRef:
+    name: initial-git-secret
