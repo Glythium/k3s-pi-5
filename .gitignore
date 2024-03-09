@@ -1,0 +1,3 @@
+# A temporary GitRepo Flux source used to quickly check the GitOps-ability of branches
+# Meant to be manually applied and removed without messing with the main source
+dev-git.yaml
