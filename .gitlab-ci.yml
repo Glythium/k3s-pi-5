@@ -3,6 +3,8 @@ stages:
 
 test-runner:
   stage: test-runner
+  tags:
+  - pi5
   image: alpine
   script:
   - echo "The runner works!"
