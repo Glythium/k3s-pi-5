@@ -1,0 +1,70 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: docker-registry
+  namespace: flux-system
+spec:
+  force: false
+  interval: 5m
+  path: ./services/docker-registry
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: dev-git
+  targetNamespace: flux-system
+  timeout: 1m
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: twuni
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://helm.twun.io
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: docker-registry
+  namespace: flux-system
+spec:
+  interval: 5m
+  timeout: 5m
+  targetNamespace: docker-registry
+  chart:
+    spec:
+      chart: docker-registry
+      version: '2.*'
+      sourceRef:
+        kind: HelmRepository
+        name: twuni
+      interval: 5m
+  releaseName: docker-registry
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  driftDetection:
+    mode: enabled
+  values:
+    serviceAccount:
+      create: true
+    ingress:
+      enabled: true
+      className: traefik
+      hosts:
+      - docker.glythium.io
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true    
+    garbageCollect:
+      enabled: true
+    
