@@ -4,4 +4,8 @@ namespace: flux-system
 resources:
   - initial-git-source.yaml
   - common-kustomize.yaml
-  - cert-manager/
+
+  # Toggle each of the "common" services off by commenting out the corresponding line below
+  - cert-manager
+  - kyverno/
+  - prometheus/
