@@ -9,3 +9,5 @@ resources:
   - cert-manager
   - kyverno/
   - prometheus/
+  - sealed-secrets/
+  # - vault/
