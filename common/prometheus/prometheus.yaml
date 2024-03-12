@@ -38,8 +38,10 @@ spec:
   values:
     crds: 
       enabled: true
-    prometheusSpec:
-      retention: 2d
+    prometheus:
+      prometheusSpec:
+        scrapeInterval: 1m
+        retention: 2d
     grafana:
       admin:
         existingSecret: "grafana-admin"
