@@ -40,7 +40,7 @@ spec:
       enabled: true
     prometheus:
       prometheusSpec:
-        scrapeInterval: 1m
+        scrapeInterval: 2m
         retention: 2d
     grafana:
       admin:
