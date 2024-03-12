@@ -60,13 +60,7 @@ spec:
       enabled: true
       className: traefik
       hosts:
-      - docker.glythium.io
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-      prometheusRule:
-        enabled: true    
+      - docker.glythium.io 
     garbageCollect:
       enabled: true
     
