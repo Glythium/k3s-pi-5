@@ -11,7 +11,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: dev-git
+    name: initial-git-source
   targetNamespace: flux-system
   timeout: 1m
 ---
