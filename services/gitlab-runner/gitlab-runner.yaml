@@ -30,6 +30,10 @@ metadata:
   name: gitlab-runner
   namespace: flux-system
 spec:
+  dependsOn:
+  - name: kyverno
+  - name: sealed-secrets
+  # - name: vault
   interval: 5m
   timeout: 5m
   targetNamespace: gitlab-runner
@@ -53,7 +57,6 @@ spec:
     mode: enabled
   values:
     gitlabUrl: https://gitlab.com
-
     rbac:
       create: true
       clusterWideAccess: true
@@ -61,11 +64,8 @@ spec:
       - apiGroups: ["*"]
         resources: ["*"]
         verbs: ["*"]
-
-
     secrets:
     - name: gitlab-runner-token
-
     # Raspeberry Pi 5 uses the ARM architecture, we need to override the helper image to use the ARM arch as well
     runners:
       config: |-
