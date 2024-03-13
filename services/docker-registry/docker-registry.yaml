@@ -30,6 +30,10 @@ metadata:
   name: docker-registry
   namespace: flux-system
 spec:
+  dependsOn:
+  - name: kyverno
+  - name: sealed-secrets
+  # - name: vault
   interval: 5m
   timeout: 5m
   targetNamespace: docker-registry
