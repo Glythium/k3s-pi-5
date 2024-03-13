@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - gitlab-runner.yaml
+  - runner-token-template-sealed.yaml
