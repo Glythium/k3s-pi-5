@@ -3,3 +3,11 @@ kind: Kustomization
 resources:
   - gitlab-runner.yaml
   - runner-token-template-sealed.yaml
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: notImportantHere
+      namespace: flux-system
+    unsetOnly: true
