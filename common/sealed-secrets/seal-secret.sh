@@ -28,3 +28,8 @@ kubeseal --controller-namespace "sealed-secrets" \
     --controller-name "sealed-secrets" \
     --secret-file "${secret_file}" \
     --sealed-secret-file "${sealed_secret_file}"
+
+cat "${sealed_secret_file}" | kubeseal \
+    --controller-namespace "sealed-secrets" \
+    --controller-name "sealed-secrets" \
+    --validate
