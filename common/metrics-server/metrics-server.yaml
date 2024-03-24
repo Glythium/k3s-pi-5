@@ -1,0 +1,45 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: metrics-server
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://kubernetes-sigs.github.io/metrics-server/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: metrics-server
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: kyverno
+  - name: prometheus
+  interval: 5m
+  timeout: 5m
+  targetNamespace: metrics-server
+  chart:
+    spec:
+      chart: metrics-server
+      version: '3.*'
+      sourceRef:
+        kind: HelmRepository
+        name: metrics-server
+      interval: 5m
+  releaseName: metrics-server
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  driftDetection:
+    mode: enabled
+  values:
+    metrics:
+      enabled: true
+    serviceMonitor:
+      enabled: true
