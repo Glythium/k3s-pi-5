@@ -60,11 +60,6 @@ spec:
       create: true
     persistence:
       enabled: true
-    ingress:
-      enabled: true
-      className: traefik
-      hosts:
-      - docker.glythium.io 
     garbageCollect:
       enabled: true
     
