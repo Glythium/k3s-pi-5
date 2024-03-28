@@ -1,5 +1,5 @@
 variables:
-  PIPELINE_NAME: "Ops and Maint"
+  PIPELINE_NAME: "Default Pipeline Name"
 
 stages:
 - test-runner
