@@ -37,3 +37,5 @@ spec:
     mode: enabled
   values:
     installCRDs: true
+    config:
+      enableDefaultRegistryMutation: false
