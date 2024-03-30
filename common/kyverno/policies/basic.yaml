@@ -28,4 +28,4 @@ spec:
   driftDetection:
     mode: enabled
   values:
-    installCRDs: true
+    failurePolicy: Ignore
