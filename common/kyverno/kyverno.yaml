@@ -38,14 +38,4 @@ spec:
   values:
     grafana:
       enabled: true
-<<<<<<< 4530aab84ea9c4451da2d06654cf8f70832fad27
       namespace: monitoring
-=======
-      namespace: monitoring
-    features:
-      # These values are NOT for production use, bad practice
-      forceFailurePolicyIgnore:
-        enabled: true
-      registryClient:
-        allowInsecure: true
->>>>>>> 05f115a18b49c20edb0a1ce83ba0a5f04baf5397

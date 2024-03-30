@@ -26,10 +26,4 @@ spec:
     remediation:
       retries: 3
   driftDetection:
-<<<<<<< 4530aab84ea9c4451da2d06654cf8f70832fad27
     mode: enabled
-=======
-    mode: enabled
-  values:
-    failurePolicy: Ignore
->>>>>>> 05f115a18b49c20edb0a1ce83ba0a5f04baf5397
