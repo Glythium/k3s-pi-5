@@ -40,5 +40,8 @@ spec:
       enabled: true
       namespace: monitoring
     features:
+      # These values are NOT for production use, bad practice
+      forceFailurePolicyIgnore:
+        enabled: true
       registryClient:
         allowInsecure: true
