@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-registry
+  namespace: harbor
+stringData:
+  # Run: htpasswd -nbBC10 registryUser <REGISTRY_HTTP_SECRET>
+  REGISTRY_HTPASSWD: <htpasswd>
+  REGISTRY_HTTP_SECRET: <random chars>

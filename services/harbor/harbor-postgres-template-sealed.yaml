@@ -1,0 +1,15 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: harbor-postgres-secret
+  namespace: harbor
+spec:
+  encryptedData:
+    postgres-password: AgBk9+GsYvc4mqHl8G4SzpIMfieHTShA4mtYmLD6Sy1aNORvq5VReO16hdSu0PUW4BuyljPJzl0Wsrsx6yUfeEcYhs4Jn1nVVswZwBPXgzQti4OJtst/hT3ekdxIMSq/07SVk72PzcqVj8KeJAHtcBUpmewDbICW7aXAtO9tYQnHwCTU773Oi6oQ8TXRVIyNKFsaNk1vqImxGZm8vlb22XrqTYwoX3Mo7y+Ljxm4+rTVDOFJBXnIhBTh4GqIBHHaa5tQf2rgrKW0G0npfkxQcVuQ9cCx9lRac/UyA1rtZOxXnr9CkXzL1UTv6x58N5pDJNniiMTwRwzDz74Bx19FWo7oNdUqWJ4ebLfV1LsVx2BOesu64C1cfyZMLPl40doN1xWfOyY/yVTll7fbLRx7jsy9ssCSZd/RSn1K8ytN+zvh8cn3WtyYk9Kimo1tNBlG6NxDQSDvpLHVMBZZ59DVM1+/kaEu0qGs9RS3HpDhTj1sPoMqiFl7ddh5J1gPh1TNhL8b1AuyDbRFilDT9DddpW7P0fYhRgfWNEoa7HHo+epkz67dSCLCnyAyp9c6taGlJ34OmpAOCbjkUuV9CCt7NWXvYlu9ul/ep2ichRvXIYYDRAkJ8qo9qFpXLlFm+cxV3nEPKJCsVleocbAlx7LAZi9UGBujE8eJcPMsVc6ILmHuPvio3sRH0UctSXZmcucG0r5OPRBOJX7/PP/kE+hOq+DQOaaeRY4GA1Vi53Cr/8lQ3Q==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: harbor-postgres-secret
+      namespace: harbor

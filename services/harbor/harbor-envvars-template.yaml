@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-envvars
+  namespace: harbor
+stringData:
+  CSRF_KEY: <random chars>
+
+  # Initial admin password
+  HARBOR_ADMIN_PASSWORD: <random chars>
+
+  # Make sure this is the same as the harbor-postgres-template.yaml's "postgres-password"
+  POSTGRESQL_PASSWORD: <random chars>
+
+  # Use these same credentials for the harbor-registry-template.yaml
+  REGISTRY_CREDENTIAL_USERNAME: registryUser
+  REGISTRY_CREDENTIAL_PASSWORD: <random chars>
+
+  # These are the default Redis Service endpoints that get created with this chart
+  _REDIS_URL_CORE: redis://harbor-redis-master:6379
+  _REDIS_URL_REG: redis://harbor-redis-master:6379
