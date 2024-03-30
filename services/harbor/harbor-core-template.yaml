@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-core-secret
+  namespace: harbor
+stringData:
+  secret: <random chars>
+  secretKey: <random chars>

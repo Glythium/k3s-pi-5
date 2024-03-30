@@ -2,7 +2,7 @@
 
 # We cannot seal a Secret if we don't get told which Secret to seal
 if [ -z $1 ]; then
-    echo "Usage: ./$0 <secret filename> [sealed secret file]"
+    echo "Usage: $0 <secret filename> [sealed secret file]"
     exit 1
 fi
 
