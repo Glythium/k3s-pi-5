@@ -1,0 +1,14 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: service-stack
+  namespace: flux-system
+spec:
+  force: false
+  interval: 5m
+  path: ./services
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: initial-git-source
+  timeout: 1m
