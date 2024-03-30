@@ -36,8 +36,6 @@ spec:
   driftDetection:
     mode: enabled
   values:
-    config:
-      enableDefaultRegistryMutation: false
     grafana:
       enabled: true
       namespace: monitoring
