@@ -36,6 +36,11 @@ spec:
   driftDetection:
     mode: enabled
   values:
-    installCRDs: true
     config:
       enableDefaultRegistryMutation: false
+    grafana:
+      enabled: true
+      namespace: monitoring
+    features:
+      registryClient:
+        allowInsecure: true
