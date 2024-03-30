@@ -55,6 +55,7 @@ spec:
   driftDetection:
     mode: enabled
   values:
+    externalURL: https://harbor.glythium.io
     exposureType: ingress
     service:
       type: ClusterIP
