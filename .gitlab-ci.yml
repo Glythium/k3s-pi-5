@@ -1,5 +1,5 @@
 variables:
-  PIPELINE_NAME: "Default Pipeline Name"
+  PIPELINE_NAME: "Default pipeline name"
 
 stages:
 - test-runner
@@ -72,3 +72,18 @@ update-kpack:
   - cd services/kpack
   - chmod +x ./download-kpack.sh
   - ./download-kpack.sh
+
+image-relocation:
+  stage: ops-and-maint
+  rules:
+    - if: $PIPELINE_NAME == "Ops and Maint"
+      when: always
+    - when: never
+  tags:
+  - pi5
+  image:
+    name: ubuntu
+  script:
+  - cd ./services/docker-registry
+  - chmod +x image-relocation.sh
+  - ./image-relocation.sh
