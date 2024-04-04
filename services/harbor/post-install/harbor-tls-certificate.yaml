@@ -4,7 +4,7 @@ metadata:
   name: harbor-glythium-io
   namespace: harbor
 spec:
-  secretName: harbor-glythium-io-tls
+  secretName: harbor.glythium.io-tls
   issuerRef:
     kind: ClusterIssuer
     name: cloudflare
