@@ -78,6 +78,10 @@ spec:
         ingressClassName: "traefik"
         hostname: harbor.glythium.io
         tls: true
+        extraTls:
+          - hosts:
+              - harbor.glythium.io
+            secretName: harbor-glythium-io-tls
     # TODO: Install Jaeger
     # tracing:
     #   enabled: false
