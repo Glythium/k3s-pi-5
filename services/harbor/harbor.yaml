@@ -27,7 +27,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: initial-git-source
-  targetNamespace: flux-system
   timeout: 5m
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
