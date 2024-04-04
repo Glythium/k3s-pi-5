@@ -81,7 +81,7 @@ spec:
         extraTls:
           - hosts:
               - harbor.glythium.io
-            secretName: harbor-glythium-io-tls
+            secretName: harbor.glythium.io-tls
     # TODO: Install Jaeger
     # tracing:
     #   enabled: false
