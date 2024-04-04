@@ -38,4 +38,4 @@ spec:
   values:
     grafana:
       enabled: true
-      namespace: monitoring
+      namespace: kyverno

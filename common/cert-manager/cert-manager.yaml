@@ -16,6 +16,7 @@ metadata:
 spec:
   dependsOn:
   - name: kyverno
+  - name: sealed-secrets
   interval: 5m
   timeout: 5m
   targetNamespace: cert-manager
