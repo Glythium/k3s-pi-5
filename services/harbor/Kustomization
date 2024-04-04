@@ -6,6 +6,7 @@ resources:
   - harbor-envvars-template-sealed.yaml
   - harbor-postgres-template-sealed.yaml
   - harbor-registry-template-sealed.yaml
+  - harbor-tls-certificate.yaml
 transformers:
   - |-
     apiVersion: builtin
