@@ -16,7 +16,7 @@ test-runner:
     - when: never
   tags:
   - pi5
-  image: alpine
+  image: harbor.glythium.io/dockerhub/alpine
   script:
   - echo "The runner works!"
 
@@ -26,7 +26,7 @@ trufflehog-scan:
   stage: secret-scanning
   tags:
   - pi5
-  image: trufflesecurity/trufflehog
+  image: harbor.glythium.io/dockerhub/trufflesecurity/trufflehog
   script:
   - trufflehog git file://. --since-commit main --branch ${CI_COMMIT_BRANCH} --fail
   - trufflehog filesystem . --only-verified --fail
@@ -37,7 +37,7 @@ server-side-validation:
   stage: yaml-validation
   tags:
   - pi5
-  image: bitnami/kubectl
+  image: harbor.glythium.io/dockerhub/bitnami/kubectl
   script:
   - for yaml in $(find . -name *.yaml); do
       kubectl apply -f "${yaml}" --dry-run=server;
@@ -48,7 +48,7 @@ diff-yaml:
   stage: yaml-validation
   tags:
   - pi5
-  image: bitnami/kubectl
+  image: harbor.glythium.io/dockerhub/bitnami/kubectl
   script:
   - for yaml in $(ls -R | grep "\.yaml" | grep -v "template"); do
       kubectl diff -f $(find . -name "${yaml}") || status=$?;
@@ -67,23 +67,23 @@ update-kpack:
     - when: never
   tags:
   - pi5
-  image: bitnami/git
+  image: harbor.glythium.io/dockerhub/bitnami/git
   script:
   - cd services/kpack
   - chmod +x ./download-kpack.sh
   - ./download-kpack.sh
 
-image-relocation:
-  stage: ops-and-maint
-  rules:
-    - if: $PIPELINE_NAME == "Ops and Maint"
-      when: always
-    - when: never
-  tags:
-  - pi5
-  image:
-    name: ubuntu
-  script:
-  - cd ./services/docker-registry
-  - chmod +x image-relocation.sh
-  - ./image-relocation.sh
+# image-relocation:
+#   stage: ops-and-maint
+#   rules:
+#     - if: $PIPELINE_NAME == "Ops and Maint"
+#       when: always
+#     - when: never
+#   tags:
+#   - pi5
+#   image:
+#     name: harbor.glythium.io/dockerhub/ubuntu
+#   script:
+#   - cd ./services/docker-registry
+#   - chmod +x image-relocation.sh
+#   - ./image-relocation.sh
