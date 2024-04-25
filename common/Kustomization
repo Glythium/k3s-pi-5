@@ -6,6 +6,7 @@ resources:
 
   # Toggle each of the "common" services off by commenting out the corresponding line below
   - cert-manager
+  - keycloak/
   - kyverno/
   # - metrics-server/
   - prometheus/

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-postgres-secret
+  namespace: keycloak
+stringData:
+  postgres-password: <random chars>
+  password: <random chars>
