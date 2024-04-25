@@ -31,6 +31,7 @@ metadata:
 spec:
   dependsOn:
   - name: cert-manager
+  - name: keycloak
   - name: kyverno
   - name: sealed-secrets
   # - name: vault
@@ -63,6 +64,7 @@ spec:
         scrapeInterval: 2m
         retention: 2d
     grafana:
+      envFromSecret: grafana-ini
       admin:
         existingSecret: "grafana-admin"
         userKey: admin-user
@@ -72,3 +74,19 @@ spec:
         path: /
         hosts:
           - grafana.glythium.io
+      grafana.ini:
+        server:
+          root_url: https://grafana.glythium.io
+        auth.generic_oauth:
+          enabled: true
+          name: Keycloak
+          allow_sign_up: true
+          scopes: openid email profile offline_access roles
+          email_attribute_path: email
+          login_attribute_path: username
+          name_attribute_path: full_name
+          auth_url: https://auth.glythium.io/realms/master/protocol/openid-connect/auth
+          token_url: https://auth.glythium.io/realms/master/protocol/openid-connect/token
+          api_url: https://auth.glythium.io/realms/master/protocol/openid-connect/userinfo
+          role_attribute_strict: true
+          role_attribute_path: contains(resource_access.grafana.roles[*], 'admin') && 'Admin' || contains(resource_access.grafana.roles[*], 'editor') && 'Editor' || 'Viewer'
