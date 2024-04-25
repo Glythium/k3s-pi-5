@@ -36,6 +36,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
+  - name: keycloak
   - name: kyverno
   - name: sealed-secrets
   interval: 5m
