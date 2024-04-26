@@ -5,7 +5,7 @@ resources:
   - common-kustomize.yaml
 
   # Toggle each of the "common" services off by commenting out the corresponding line below
-  - cert-manager
+  - cert-manager/
   - keycloak/
   - kyverno/
   # - metrics-server/
