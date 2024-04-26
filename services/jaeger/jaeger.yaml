@@ -1,0 +1,74 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: jaeger
+  namespace: flux-system
+spec:
+  force: false
+  interval: 5m
+  path: ./services/jaeger
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: initial-git-source
+  targetNamespace: flux-system
+  timeout: 5m
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: jaegertracing
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://jaegertracing.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: jaeger
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: keycloak
+  - name: kyverno
+  interval: 5m
+  timeout: 5m
+  targetNamespace: jaeger
+  chart:
+    spec:
+      chart: jaeger
+      version: '3.*'
+      sourceRef:
+        kind: HelmRepository
+        name: jaegertracing
+      interval: 5m
+  releaseName: jaeger
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  driftDetection:
+    mode: enabled
+  values:
+    provisionDataStore:
+      cassandra: false
+    allInOne:
+      enabled: true
+      ingress:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+        - jaeger.glythium.io
+    storage:
+      type: memory
+    agent:
+      enabled: false
+    collector:
+      enabled: false
+    query:
+      enabled: false    
