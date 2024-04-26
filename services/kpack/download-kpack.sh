@@ -15,6 +15,8 @@ echo "Downloading kpack ${tag}"
 
 curl --silent --location "https://github.com/buildpacks-community/kpack/releases/download/${tag}/release-${tag#v}.yaml" --output kpack.yaml
 
+sed -i -e s/@sha256.*$//g kpack.yaml
+
 if git status | grep modified | grep kpack.yaml; then
     if git branch -a | grep "remotes/origin/update/kpack-${tag}"; then
         echo "Branch 'update/kpack-${tag}' already exists"
