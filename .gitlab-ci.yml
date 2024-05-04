@@ -37,7 +37,7 @@ server-side-validation:
   stage: yaml-validation
   tags:
   - pi5
-  image: ${HARBOR_FQDN}/dockerhub/bitnami/kubectl
+  image: ${HARBOR_FQDN}/custom/kubectl
   script:
   - for yaml in $(find . -name *.yaml); do
       kubectl apply -f "${yaml}" --dry-run=server;
@@ -48,7 +48,7 @@ diff-yaml:
   stage: yaml-validation
   tags:
   - pi5
-  image: ${HARBOR_FQDN}/dockerhub/bitnami/kubectl
+  image: ${HARBOR_FQDN}/custom/kubectl
   script:
   - for yaml in $(ls -R | grep "\.yaml" | grep -v "template"); do
       kubectl diff -f $(find . -name "${yaml}") || status=$?;
@@ -67,7 +67,7 @@ update-kpack:
     - when: never
   tags:
   - pi5
-  image: ${HARBOR_FQDN}/dockerhub/bitnami/git
+  image: ${HARBOR_FQDN}/custom/git
   script:
   - cd services/kpack
   - chmod +x ./download-kpack.sh
@@ -87,3 +87,29 @@ image-relocation:
   - cd ./services/harbor
   - chmod +x image-relocation.sh
   - ./image-relocation.sh
+
+build-custom-images:
+  stage: ops-and-maint
+  rules:
+    - if: $PIPELINE_NAME == "Ops and Maint"
+      when: always
+    - when: never
+  tags:
+  - pi5
+  image:
+    name: ${HARBOR_FQDN}/image-builder/image-builder
+  script:
+  - cd "${CI_PROJECT_DIR}/custom-images"
+  - crane auth login "${HARBOR_FQDN}"
+      --username "${HARBOR_USERNAME}"
+      --password "${HARBOR_PASSWORD}"
+  - for image in $(ls . | grep .*Dockerfile); do
+      img="${image%.Dockerfile*}";
+      /kaniko/executor
+        --context .
+        --dockerfile "./${img}.Dockerfile"
+        --no-push
+        --tar-path "./${img}.tar";
+      crane push "./${img}.tar" "${HARBOR_FQDN}/custom/${img}:latest";
+      rm "./${img}.tar";
+    done
