@@ -91,6 +91,7 @@ spec:
       existingSecret: harbor-core-secret
     registry:
       existingSecret: harbor-registry
+      relativeurls: true
     postgresql:
       auth:
         existingSecret: harbor-postgres-secret
