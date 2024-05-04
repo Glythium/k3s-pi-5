@@ -59,35 +59,6 @@ diff-yaml:
   allow_failure: true
 
 # Ops and Maint Stage
-update-kpack:
-  stage: ops-and-maint
-  rules:
-    - if: $PIPELINE_NAME == "Ops and Maint"
-      when: always
-    - when: never
-  tags:
-  - pi5
-  image: ${HARBOR_FQDN}/custom/git
-  script:
-  - cd services/kpack
-  - chmod +x ./download-kpack.sh
-  - ./download-kpack.sh
-
-image-relocation:
-  stage: ops-and-maint
-  rules:
-    - if: $PIPELINE_NAME == "Ops and Maint"
-      when: always
-    - when: never
-  tags:
-  - pi5
-  image:
-    name: ${HARBOR_FQDN}/dockerhub/alpine
-  script:
-  - cd ./services/harbor
-  - chmod +x image-relocation.sh
-  - ./image-relocation.sh
-
 build-custom-images:
   stage: ops-and-maint
   rules:
@@ -113,3 +84,34 @@ build-custom-images:
       crane push "./${img}.tar" "${HARBOR_FQDN}/custom/${img}:latest";
       rm "./${img}.tar";
     done
+
+# update-kpack:
+#   stage: ops-and-maint
+#   rules:
+#     - if: $PIPELINE_NAME == "Ops and Maint"
+#       when: always
+#     - when: never
+#   tags:
+#   - pi5
+#   image: ${HARBOR_FQDN}/custom/git
+#   needs:
+#   - build-custom-images
+#   script:
+#   - cd services/kpack
+#   - chmod +x download-kpack.sh
+#   - ./download-kpack.sh
+
+# image-relocation:
+#   stage: ops-and-maint
+#   rules:
+#     - if: $PIPELINE_NAME == "Ops and Maint"
+#       when: always
+#     - when: never
+#   tags:
+#   - pi5
+#   image:
+#     name: ${HARBOR_FQDN}/dockerhub/alpine
+#   script:
+#   - cd ./services/harbor
+#   - chmod +x image-relocation.sh
+#   - ./image-relocation.sh
