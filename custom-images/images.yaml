@@ -1,0 +1,8 @@
+# The list of images, and their configuration, to be passed through the Dockerfile template to create images
+custom-images:
+- name: git
+  packages: "curl git"
+- name: kubectl
+  packages: "kubectl"
+- name: python
+  packages: "python3"
