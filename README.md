@@ -16,3 +16,7 @@ cd bootstrap
 At this point, you have a functioning GitOps workflow for your new cluster. Any changes made to the resources in the Git repository will be reconciled onto the cluster after some time. If you're new to GitOps, I'd recommend looking at the [FluxCD Documentation](https://fluxcd.io/flux/concepts/) for more information.
 
 The resources in the `services/` directory are optional to deploy. Select the folders you want to deploy in the `services/Kustomization` file, push your choices to Git, then run `kubectl apply -f services/service-stack-kustomize.yaml`. If there is a templated Secret manifest in that directory, then fill it in, seal it, then sanitize the template again.
+
+
+### Image Building
+This repo uses some images that I'm building for myself. The building and maintenance of those images is done in my [Image Building repository](https://gitlab.com/Glythium/image-building).

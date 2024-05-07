@@ -59,37 +59,6 @@ diff-yaml:
   allow_failure: true
 
 # Ops and Maint Stage
-build-custom-images:
-  stage: ops-and-maint
-  rules:
-    - if: $PIPELINE_NAME == "Ops and Maint"
-      when: always
-    - when: never
-  tags:
-  - pi5
-  image:
-    name: ${HARBOR_FQDN}/image-builder/image-builder
-  script:
-  - cd "${CI_PROJECT_DIR}/custom-images"
-  - crane auth login "${HARBOR_FQDN}"
-      --username "${HARBOR_USERNAME}"
-      --password "${HARBOR_PASSWORD}"
-  - for i in $(seq 0 $(yq '.custom-images | length' images.yaml)); do
-      name=$(yq ".custom-images[${i}].name" images.yaml);
-      packages=$(yq ".custom-images[${i}].packages" images.yaml);
-      if [[ "${name}" == "null" || "${packages}" == "null" ]]; then
-        continue;
-      fi;
-      /kaniko/executor
-        --context .
-        --dockerfile Dockerfile.template
-        --build-arg packages="${packages}"
-        --no-push
-        --tar-path "./${name}.tar";
-      crane push "./${name}.tar" "${HARBOR_FQDN}/custom/${name}:latest";
-      rm "./${name}.tar";
-    done
-
 # update-kpack:
 #   stage: ops-and-maint
 #   rules:
@@ -105,18 +74,3 @@ build-custom-images:
 #   - cd services/kpack
 #   - chmod +x download-kpack.sh
 #   - ./download-kpack.sh
-
-# image-relocation:
-#   stage: ops-and-maint
-#   rules:
-#     - if: $PIPELINE_NAME == "Ops and Maint"
-#       when: always
-#     - when: never
-#   tags:
-#   - pi5
-#   image:
-#     name: ${HARBOR_FQDN}/dockerhub/alpine
-#   script:
-#   - cd ./services/harbor
-#   - chmod +x image-relocation.sh
-#   - ./image-relocation.sh
