@@ -1,0 +1,16 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: gitlab-agent-token
+  namespace: gitlab-agent
+spec:
+  encryptedData:
+    token: AgATqHIvPNCQQ6tJQbNSovT/uoonlaM6BFWWckScan2db7bC+j1CdD5Uq3ktsDH0V0HH85bMUR10zPi6EBiXenes7+6XD+bfKA/ImwuXvSXSJqjV7laytyaPeT9XX07pVz2XxLQ/z8EVIh7MxvE6KJY5Tqoy+RkoCBrXBbNdyMdc8nxdDlYoZ5k0Qf4Pa36YP/pjcXUxOWUdX+oY3KW1DmcL2Mspf5RVgfu8VgZn7o0qlTZCsX0iKZfPkOAWv156gbM3JAGS+5rZ3mfOJoSXFp+jaB2RriZpT8szEeGm/wbJuerufdKUheTW1HXoUiDyOZAy5cl0Wb+rMpgkjPfpevgzEa8mKmfWmRb/ra49MpAhIRJ3Fr79UHv8rY7LQbY6EY19e6BwT1TMZU0M2j9MxZXODQ04H1LYb6aacMSM98QfuU+73DfUb3VjJTi1ktiR+2qk6tHo59qN6xUj8UEKh+rU7XXVGQi2m2ARpsF2vmvfHLV+AYxvIOoYTWjxb/rZo1bd8qU+fZ0U9OxvZjjUoUsypo2bmuGpMVtHdou9AMqoaEuXD10cqV7vGJ63kPU+RWE0Y1J2xGeW3w2FjkzfLU1CGSNDW0T7YAe8q6yLpnQ6uEBg6SAH2guj+MkMuIFIncV+MiD4UvFm0XqxUzJfUfcDB54ywZ18k161BnZwGG4X9Sw/NccurnIlp2RR/0B3rTR7iH0CwrzgvFuUe3XgN8xjhqy76gPspquQYv3bSAukVEFrMusvmm1b7+nglnIwIRgfQBE6fOyafsGY
+  template:
+    metadata:
+      creationTimestamp: null
+      name: gitlab-agent-token
+      namespace: gitlab-agent
+    type: Opaque

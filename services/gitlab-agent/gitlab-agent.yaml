@@ -1,0 +1,64 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: gitlab-agent
+  namespace: flux-system
+spec:
+  force: false
+  interval: 5m
+  path: ./services/gitlab-agent
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: initial-git-source
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: gitlab-agent-post-install
+  namespace: flux-system
+spec:
+  force: false
+  interval: 5m
+  path: ./services/gitlab-agent/post-install
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: initial-git-source
+  timeout: 5m
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: gitlab-agent
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: kyverno
+  - name: sealed-secrets
+  interval: 5m
+  timeout: 5m
+  targetNamespace: gitlab-agent
+  chart:
+    spec:
+      chart: gitlab-agent
+      version: '*'
+      sourceRef:
+        kind: HelmRepository
+        name: gitlab
+      interval: 5m
+  releaseName: gitlab-agent
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  driftDetection:
+    mode: enabled
+  values:
+    config:
+      secretName: gitlab-agent-token
