@@ -16,7 +16,7 @@ test-runner:
     - when: never
   tags:
   - pi5
-  image: ${HARBOR_FQDN}/dockerhub/alpine
+  image: ${HARBOR_HOST}/dockerhub/alpine
   script:
   - echo "The runner works!"
 
@@ -26,7 +26,7 @@ trufflehog-scan:
   stage: secret-scanning
   tags:
   - pi5
-  image: ${HARBOR_FQDN}/dockerhub/trufflesecurity/trufflehog
+  image: ${HARBOR_HOST}/dockerhub/trufflesecurity/trufflehog
   script:
   - trufflehog git file://. --since-commit main --branch ${CI_COMMIT_BRANCH} --fail
   - trufflehog filesystem . --only-verified --fail
@@ -37,7 +37,7 @@ server-side-validation:
   stage: yaml-validation
   tags:
   - pi5
-  image: ${HARBOR_FQDN}/custom/kubectl
+  image: ${HARBOR_HOST}/custom/kubectl
   script:
   - for yaml in $(find . -name *.yaml); do
       kubectl apply -f "${yaml}" --dry-run=server;
@@ -48,7 +48,7 @@ diff-yaml:
   stage: yaml-validation
   tags:
   - pi5
-  image: ${HARBOR_FQDN}/custom/kubectl
+  image: ${HARBOR_HOST}/custom/kubectl
   script:
   - for yaml in $(ls -R | grep "\.yaml" | grep -v "template"); do
       kubectl diff -f $(find . -name "${yaml}") || status=$?;
@@ -57,20 +57,3 @@ diff-yaml:
       fi;
     done
   allow_failure: true
-
-# Ops and Maint Stage
-# update-kpack:
-#   stage: ops-and-maint
-#   rules:
-#     - if: $PIPELINE_NAME == "Ops and Maint"
-#       when: always
-#     - when: never
-#   tags:
-#   - pi5
-#   image: ${HARBOR_FQDN}/custom/git
-#   needs:
-#   - build-custom-images
-#   script:
-#   - cd services/kpack
-#   - chmod +x download-kpack.sh
-#   - ./download-kpack.sh
