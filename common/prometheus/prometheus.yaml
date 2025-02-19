@@ -73,10 +73,10 @@ spec:
         enabled: true
         path: /
         hosts:
-          - grafana.glythium.io
+          - metrics.glythium.io
       grafana.ini:
         server:
-          root_url: https://grafana.glythium.io
+          root_url: https://metrics.glythium.io
         auth.generic_oauth:
           enabled: true
           name: Keycloak
