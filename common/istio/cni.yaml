@@ -1,0 +1,31 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: istio-cni
+  namespace: flux-system
+spec:
+  interval: 5m
+  timeout: 5m
+  targetNamespace: istio-system
+  chart:
+    spec:
+      chart: cni
+      version: '1.*'
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+      interval: 5m
+  releaseName: cni
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  driftDetection:
+    mode: enabled
+  values:
+    cniConfDir: /var/lib/rancher/k3s/agent/etc/cni/net.d
+    cniBinDir: /var/lib/rancher/k3s/data/cni

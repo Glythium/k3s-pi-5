@@ -39,3 +39,6 @@ spec:
     grafana:
       enabled: true
       namespace: kyverno
+    config:
+      resourceFiltersExcludeNamespaces:
+      - istio-system

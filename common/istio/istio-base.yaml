@@ -1,29 +1,28 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: basic-kyverno-policy
+  name: istio-base
   namespace: flux-system
 spec:
-  dependsOn:
-  - name: kyverno
   interval: 5m
   timeout: 5m
-  targetNamespace: kyverno
+  targetNamespace: istio-system
   chart:
     spec:
-      chart: kyverno-policies
-      version: '3.*'
+      chart: base
+      version: '1.*'
       sourceRef:
         kind: HelmRepository
-        name: kyverno
+        name: istio
       interval: 5m
-  releaseName: basic-kyverno-policy
+  releaseName: base
   install:
+    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     remediation:
       retries: 3
   driftDetection:
-    mode: enabled
+    mode: disabled
