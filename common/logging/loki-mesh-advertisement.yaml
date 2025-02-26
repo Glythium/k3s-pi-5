@@ -1,0 +1,35 @@
+---
+# The ServiceEntry will advertise the listed "hosts" on the service mesh without having a DNS record set somewhere
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: loki
+  namespace: logging
+spec:
+  hosts:
+  - logs.glythium.io
+  - logs.glythium.com
+  location: MESH_INTERNAL # Value can be MESH_INTERNAL | MESH_EXTERNAL
+  ports:
+  - number: 3100
+    name: loki
+    protocol: HTTP
+  resolution: DNS
+---
+# The VirtualService routes traffic on the mesh to the destination Service
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: loki
+  namespace: logging
+spec:
+  hosts:
+  - logs.glythium.io
+  - logs.glythium.com
+  gateways:
+  - mesh # The keyword 'mesh' will only route traffic between sidecars, not to/from a Gateway
+  http:
+  - name: http
+    route:
+    - destination:
+        host: loki

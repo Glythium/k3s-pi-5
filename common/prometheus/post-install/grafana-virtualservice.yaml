@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  hosts:
+  - metrics.glythium.io
+  - metrics.glythium.com
+  gateways:
+  - istio-ingress/ingress-gateway
+  - mesh
+  http:
+  - name: http
+    route:
+    - destination:
+        host: prometheus-grafana

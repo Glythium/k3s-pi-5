@@ -4,6 +4,7 @@ resources:
   - helmRepository.yaml
   - loki.yaml
   - alloy.yaml
+  - loki-mesh-advertisement.yaml
 transformers:
   - |-
     apiVersion: builtin
