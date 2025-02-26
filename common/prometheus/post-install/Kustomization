@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - grafana-admin-template-sealed.yaml
   - grafana-ini-template-sealed.yaml
+  - grafana-virtualservice.yaml
 transformers:
   - |-
     apiVersion: builtin

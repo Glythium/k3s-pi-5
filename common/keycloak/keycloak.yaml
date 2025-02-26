@@ -71,24 +71,18 @@ spec:
         memory: 512Mi
     ingress:
       enabled: true
-      ingressClassName: traefik
+      # ingressClassName: traefik
       hostname: auth.glythium.io
     adminIngress:
-      enabled: true
+      enabled: false
       ingressClassName: traefik
       hostname: auth.glythium.io
     cache:
       enabled: false
     pdb:
       create: false
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-        namespace: monitoring
-      prometheusRule:
-        enabled: true
-        namespace: monitoring
+    metrics: # Grafana has a dependency on Keycloak in this config, so we cannot add the ServiceMonitors
+      enabled: false
     postgresql:
       enabled: true
       auth:

@@ -13,7 +13,7 @@ cd bootstrap
 
 
 ### What Now?
-At this point, you have a functioning GitOps workflow for your new cluster. Any changes made to the resources in the Git repository will be reconciled onto the cluster after some time. If you're new to GitOps, I'd recommend looking at the [FluxCD Documentation](https://fluxcd.io/flux/concepts/) for more information.
+At this point, you have a functioning GitOps workflow for your new cluster. Any changes made to the resources in the Git repository will be reconciled onto the cluster after some time. If you're new to GitOps, I'd recommend looking at the [FluxCD Documentation](https://fluxcd.io/flux/concepts/) for more information. You will have to fill in the `Secret` templates in the common services before those services will reconcile successfully. Remember to only pushed the `sealed` versions of those templates, __do not store your unencrypted `Secrets` in Git!__
 
 The resources in the `services/` directory are optional to deploy. Select the folders you want to deploy in the `services/Kustomization` file, push your choices to Git, then run `kubectl apply -f services/service-stack-kustomize.yaml`. If there is a templated Secret manifest in that directory, then fill it in, seal it, then sanitize the template again.
 

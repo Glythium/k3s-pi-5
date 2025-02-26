@@ -5,6 +5,8 @@ metadata:
   name: istio-cni
   namespace: flux-system
 spec:
+  dependsOn:
+  - name: istio-base
   interval: 5m
   timeout: 5m
   targetNamespace: istio-system

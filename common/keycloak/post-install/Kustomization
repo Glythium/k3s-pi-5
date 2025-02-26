@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - keycloak-postgres-template-sealed.yaml
   - keycloak-secret-template-sealed.yaml
+  - keycloak-virtualservice.yaml
 transformers:
   - |-
     apiVersion: builtin
