@@ -15,7 +15,6 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: istio-cni
   - name: istiod
   interval: 5m
   timeout: 5m
