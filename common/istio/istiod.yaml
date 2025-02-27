@@ -28,7 +28,3 @@ spec:
       retries: 3
   driftDetection:
     mode: disabled
-  values:
-    sidecarInjectorWebhook:
-      enableNamespacesByDefault: true
-      reinvocationPolicy: IfNeeded

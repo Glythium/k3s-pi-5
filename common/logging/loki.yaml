@@ -35,6 +35,8 @@ spec:
       commonConfig:
         replication_factor: 1
       useTestSchema: true
+      podLabels:
+        sidecar.istio.io/inject: "true"
       storage:
         type: filesystem
     test:

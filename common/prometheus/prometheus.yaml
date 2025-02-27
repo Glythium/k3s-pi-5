@@ -67,6 +67,8 @@ spec:
         scrapeInterval: 5m
         retention: 2d
     grafana:
+      podLabels:
+        sidecar.istio.io/inject: "true"
       envFromSecret: grafana-ini
       admin:
         existingSecret: "grafana-admin"
