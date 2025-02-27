@@ -60,6 +60,17 @@ spec:
       retries: 3
   driftDetection:
     mode: enabled
+  postRenderers:
+  - kustomize:
+      patches:
+      - target:
+          version: v1
+          kind: Ingress
+          name: harbor-ingress
+        patch: |
+          - op: add
+            path: /metadata/labels/environment
+            value: production 
   values:
     externalURL: https://harbor.glythium.io
     exposureType: ingress
