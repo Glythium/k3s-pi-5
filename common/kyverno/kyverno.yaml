@@ -14,8 +14,6 @@ metadata:
   name: kyverno
   namespace: flux-system
 spec:
-  dependsOn:
-  - name: istiod
   interval: 5m
   timeout: 5m
   targetNamespace: kyverno
