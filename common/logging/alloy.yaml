@@ -61,6 +61,6 @@ spec:
 
           loki.write "loki" {
             endpoint {
-              url = "http://logs.glythium.io:3100/loki/api/v1/push"
+              url = "http://loki:3100/loki/api/v1/push"
             }
           }
