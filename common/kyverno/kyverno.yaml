@@ -45,3 +45,6 @@ spec:
     config:
       resourceFiltersExcludeNamespaces:
       - istio-system
+      resourceFiltersExclude:
+      - '[Deployment,harbor,harbor-registry]'
+      - '[Pod,harbor,harbor-registry-*]'
