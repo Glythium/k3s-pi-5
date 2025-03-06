@@ -8,6 +8,6 @@ spec:
   interval: 1h
   url: https://gitlab.com/Glythium/k3s-pi-5.git
   ref:
-    branch: reenable-services
+    branch: main
   secretRef:
     name: initial-git-secret
