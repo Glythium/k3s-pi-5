@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   force: false
-  interval: 5m
+  interval: 1h
   path: ./services/jaeger
   prune: true
   sourceRef:
@@ -33,7 +33,7 @@ spec:
   dependsOn:
   - name: keycloak
   - name: kyverno
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: jaeger
   chart:

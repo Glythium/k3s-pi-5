@@ -8,7 +8,7 @@ spec:
   dependsOn:
   - name: istio-cni
   - name: istiod
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: istio-ingress
   chart:

@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   force: false
-  interval: 5m
+  interval: 1h
   path: ./common/keycloak/post-install
   prune: true
   sourceRef:
@@ -20,7 +20,7 @@ metadata:
   name: bitnami
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 1h
   type: oci
   url: oci://registry-1.docker.io/bitnamicharts
 ---
@@ -34,7 +34,7 @@ spec:
   - name: cert-manager
   - name: kyverno
   - name: sealed-secrets
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: keycloak
   chart:
@@ -44,7 +44,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: bitnami
-      interval: 5m
+      interval: 1h
   releaseName: keycloak
   install:
     createNamespace: true
@@ -71,19 +71,14 @@ spec:
       limits:
         cpu: 500m
         memory: 512Mi
-    ingress:
-      enabled: true
-      # ingressClassName: traefik
-      hostname: auth.glythium.io
-    adminIngress:
-      enabled: false
-      ingressClassName: traefik
-      hostname: auth.glythium.io
+    extraEnvVars:
+    - name: KEYCLOAK_HOSTNAME
+      value: "https://auth.glythium.io"
     cache:
       enabled: false
     pdb:
       create: false
-    metrics: # Grafana has a dependency on Keycloak in this config, so we cannot add the ServiceMonitors
+    metrics: # Grafana has a dependency on Keycloak in this config, so we cannot add the ServiceMonitors using this Helm chart
       enabled: false
     postgresql:
       enabled: true

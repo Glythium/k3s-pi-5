@@ -17,7 +17,7 @@ spec:
   dependsOn:
   - name: kyverno
   - name: prometheus
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: metrics-server
   chart:
