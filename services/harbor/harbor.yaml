@@ -1,18 +1,19 @@
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: harbor
-  namespace: flux-system
-spec:
-  force: false
-  interval: 5m
-  path: ./services/harbor
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: initial-git-source
-  timeout: 5m
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: harbor
+#   namespace: flux-system
+# spec:
+#   force: false
+#   interval: 1h
+#   path: ./services/harbor
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: initial-git-source
+#   timeout: 5m
+#   suspend: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -21,7 +22,7 @@ metadata:
   namespace: flux-system
 spec:
   force: false
-  interval: 5m
+  interval: 1h
   path: ./services/harbor/post-install
   prune: true
   sourceRef:
@@ -39,7 +40,7 @@ spec:
   - name: keycloak
   - name: kyverno
   - name: sealed-secrets
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: harbor
   chart:
@@ -60,40 +61,20 @@ spec:
       retries: 3
   driftDetection:
     mode: enabled
-  # postRenderers:
-  # - kustomize:
-  #     patches:
-  #     - target:
-  #         version: v1
-  #         kind: Ingress
-  #         name: harbor-ingress
-  #       patch: |
-  #         - op: remove
-  #           path: /
-  #           value: production 
   values:
-    externalURL: https://harbor.glythium.io
-    exposureType: ingress
     service:
       type: ClusterIP
-    ingress:
-      core:
-        hostname: harbor.glythium.io
-    # TODO: Install Jaeger
-    # tracing:
-    #   enabled: false
-    #   namespace: harbor
-    #   jaeger:
-    #     enabled: false
-    #     endpoint: ""
-    #     username: ""
-    #     password: ""
+    exposureType: ingress
+    externalURL: https://harbor.glythium.io
     core:
       existingSecret: harbor-core-secret
       existingEnvVarsSecret: harbor-envvars
     jobservice:
       redisNamespace: harbor
       existingSecret: harbor-core-secret
+    portal:
+      podLabels:
+        sidecar.istio.io/inject: "true"
     registry:
       existingSecret: harbor-registry
       relativeurls: true
@@ -109,6 +90,3 @@ spec:
       image:
         repository: redis
         tag: 7-bookworm
-
-
-    

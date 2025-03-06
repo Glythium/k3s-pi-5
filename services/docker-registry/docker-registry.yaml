@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   force: false
-  interval: 5m
+  interval: 1h
   path: ./services/docker-registry
   prune: true
   sourceRef:
@@ -34,7 +34,7 @@ spec:
   - name: kyverno
   - name: sealed-secrets
   # - name: vault
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: docker-registry
   chart:

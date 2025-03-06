@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   force: false
-  interval: 5m
+  interval: 1h
   path: ./common/istio/post-install
   prune: true
   sourceRef:
@@ -20,7 +20,7 @@ metadata:
   name: istio-base
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: istio-system
   chart:

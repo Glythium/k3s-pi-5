@@ -1,0 +1,35 @@
+---
+# The ServiceEntry will advertise the listed "hosts" on the service mesh without having a DNS record set somewhere
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: keycloak
+  namespace: keycloak
+spec:
+  hosts:
+  - auth.glythium.io
+  - auth.glythium.com
+  location: MESH_INTERNAL # Value can be MESH_INTERNAL | MESH_EXTERNAL
+  ports:
+  - number: 80
+    name: keycloak
+    protocol: HTTP
+  resolution: DNS
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: keycloak
+  namespace: keycloak
+spec:
+  hosts:
+  - auth.glythium.io
+  - auth.glythium.com
+  gateways:
+  - istio-ingress/ingress-gateway
+  - mesh
+  http:
+  - name: http
+    route:
+    - destination:
+        host: keycloak

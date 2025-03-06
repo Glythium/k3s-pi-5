@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   force: false
-  interval: 5m
+  interval: 1h
   path: ./common/cert-manager/post-install
   prune: true
   sourceRef:
@@ -32,7 +32,7 @@ spec:
   dependsOn:
   - name: kyverno
   - name: sealed-secrets
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: cert-manager
   chart:

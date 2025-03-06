@@ -7,7 +7,7 @@ metadata:
 spec:
   dependsOn:
   - name: istio-base
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: istio-system
   chart:

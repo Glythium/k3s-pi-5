@@ -14,7 +14,7 @@ metadata:
   name: vault
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: vault
   chart:

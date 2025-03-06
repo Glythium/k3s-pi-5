@@ -14,7 +14,7 @@ metadata:
   name: kyverno
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: kyverno
   chart:
@@ -45,3 +45,5 @@ spec:
       resourceFiltersExclude:
       - '[Deployment,harbor,harbor-registry]'
       - '[Pod,harbor,harbor-registry-*]'
+    webhooksCleanup:
+      enabled: false

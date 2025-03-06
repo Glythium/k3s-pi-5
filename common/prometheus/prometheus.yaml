@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   force: false
-  interval: 5m
+  interval: 1h
   path: ./common/prometheus/post-install
   prune: true
   sourceRef:
@@ -35,7 +35,7 @@ spec:
   - name: kyverno
   - name: sealed-secrets
   # - name: vault
-  interval: 5m
+  interval: 1h
   timeout: 5m
   targetNamespace: monitoring
   chart:
@@ -64,7 +64,7 @@ spec:
         enabled: false
     prometheus:
       prometheusSpec:
-        scrapeInterval: 5m
+        scrapeInterval: 15m
         retention: 2d
     grafana:
       podLabels:
@@ -74,11 +74,6 @@ spec:
         existingSecret: "grafana-admin"
         userKey: admin-user
         passwordKey: admin-password
-      ingress:
-        enabled: true
-        path: /
-        hosts:
-          - metrics.glythium.io
       grafana.ini:
         server:
           root_url: https://metrics.glythium.io
