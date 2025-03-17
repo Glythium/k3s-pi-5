@@ -59,6 +59,22 @@ spec:
             }
           }
 
+          discovery.kubernetes "pods2" {
+            role = "pod"
+          }
+
+          loki.source.kubernetes "admin_loki_pipeline" {
+            targets    = discovery.kubernetes.pods2.targets
+            forward_to = [loki.process.set_tenant_id_to_admin.receiver]
+          }
+
+          loki.process "set_tenant_id_to_admin" {
+            forward_to = [loki.write.loki.receiver]
+            stage.tenant {
+                value = "admin"
+            }
+          }
+
           loki.write "loki" {
             endpoint {
               url = "http://loki:3100/loki/api/v1/push"
