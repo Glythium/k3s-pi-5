@@ -69,6 +69,8 @@ spec:
     core:
       existingSecret: harbor-core-secret
       existingEnvVarsSecret: harbor-envvars
+      podLabels:
+        sidecar.istio.io/inject: "true"
     jobservice:
       redisNamespace: harbor
       existingSecret: harbor-core-secret
