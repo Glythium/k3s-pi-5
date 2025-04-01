@@ -66,6 +66,9 @@ spec:
       type: ClusterIP
     exposureType: ingress
     externalURL: https://harbor.glythium.io
+    ingress:
+      core:
+        hostname: harbor.glythium.io
     core:
       existingSecret: harbor-core-secret
       existingEnvVarsSecret: harbor-envvars
