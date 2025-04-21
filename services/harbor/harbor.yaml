@@ -77,15 +77,20 @@ spec:
     jobservice:
       redisNamespace: harbor
       existingSecret: harbor-core-secret
+      existingEnvVarsSecret: harbor-envvars
     portal:
       podLabels:
         sidecar.istio.io/inject: "true"
     registry:
-      existingSecret: harbor-registry
+      existingSecret: harbor-envvars
+      # Hardcode the username here, the registry Pod seems to disregard the envvars Secret
+      credentials:
+        username: registryUser
+      # Fixes an issue when pushing images to Harbor
       relativeurls: true
     postgresql:
       auth:
-        existingSecret: harbor-postgres-secret
+        existingSecret: harbor-envvars
       primary:
         # Just reducing the number here because I don't expect to have that many connections
         extendedConfiguration: |
@@ -95,3 +100,10 @@ spec:
       image:
         repository: redis
         tag: 7-bookworm
+    trivy:
+      existingEnvVarsSecret: harbor-envvars
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring

@@ -3,8 +3,6 @@ kind: Kustomization
 resources:
   - harbor-core-template-sealed.yaml
   - harbor-envvars-template-sealed.yaml
-  - harbor-postgres-template-sealed.yaml
-  - harbor-registry-template-sealed.yaml
   - harbor-virtualservice.yaml
 transformers:
   - |-
