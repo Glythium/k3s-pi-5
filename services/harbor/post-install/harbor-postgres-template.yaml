@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: harbor-postgres-secret
-  namespace: harbor
-stringData:
-  # Make sure this is the same as the Harbor envvar POSTGRESQL_PASSWORD
-  postgres-password: <random chars>

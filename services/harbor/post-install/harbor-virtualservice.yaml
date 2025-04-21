@@ -1,20 +1,20 @@
-# ---
-# # The ServiceEntry will advertise the listed "hosts" on the service mesh without having a DNS record set somewhere
-# apiVersion: networking.istio.io/v1
-# kind: ServiceEntry
-# metadata:
-#   name: harbor
-#   namespace: harbor
-# spec:
-#   hosts:
-#   - harbor.glythium.io
-#   - harbor.glythium.com
-#   location: MESH_INTERNAL # Value can be MESH_INTERNAL | MESH_EXTERNAL
-#   ports:
-#   - number: 80
-#     name: harbor
-#     protocol: HTTP
-#   resolution: DNS
+---
+# The ServiceEntry will advertise the listed "hosts" on the service mesh without having a DNS record set somewhere
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: harbor
+  namespace: harbor
+spec:
+  hosts:
+  - harbor.glythium.io
+  - harbor.glythium.com
+  location: MESH_INTERNAL # Value can be MESH_INTERNAL | MESH_EXTERNAL
+  ports:
+  - number: 80
+    name: harbor
+    protocol: HTTP
+  resolution: DNS
 ---
 apiVersion: networking.istio.io/v1
 kind: VirtualService
@@ -29,13 +29,7 @@ spec:
   - istio-ingress/ingress-gateway
   - mesh
   http:
-  - name: portal
-    match:
-    - uri:
-        exact: "/"
-    route:
-    - destination:
-        host: harbor-portal
+    # There are specific requests to the API that need to go to the core
   - name: core
     match:
     - uri:
@@ -51,3 +45,8 @@ spec:
     route:
     - destination:
         host: harbor-core
+    # Every other request must fallthrough to the portal
+  - name: portal
+    route:
+    - destination:
+        host: harbor-portal
