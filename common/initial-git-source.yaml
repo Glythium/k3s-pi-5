@@ -5,7 +5,7 @@ metadata:
   name: initial-git-source
   namespace: flux-system
 spec:
-  interval: 1h
+  interval: 15m
   url: https://gitlab.com/Glythium/k3s-pi-5.git
   ref:
     branch: main

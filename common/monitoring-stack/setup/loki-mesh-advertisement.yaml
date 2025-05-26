@@ -9,7 +9,7 @@ spec:
   hosts:
   - logs.glythium.io
   - logs.glythium.com
-  location: MESH_INTERNAL # Value can be MESH_INTERNAL | MESH_EXTERNAL
+  location: MESH_INTERNAL # Value can be MESH_INTERNAL or MESH_EXTERNAL
   ports:
   - number: 3100
     name: loki
