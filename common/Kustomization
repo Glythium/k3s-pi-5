@@ -9,9 +9,8 @@ resources:
   - istio/
   - keycloak/
   - kyverno/
-  - logging/
   # - metrics-server/
-  - prometheus/
+  - monitoring-stack/
   - sealed-secrets/
   # - vault/
 transformers:

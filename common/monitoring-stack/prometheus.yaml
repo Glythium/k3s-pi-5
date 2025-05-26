@@ -1,0 +1,47 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prometheus
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: cert-manager
+  - name: keycloak
+  - name: kyverno
+  - name: sealed-secrets
+  interval: 1m
+  timeout: 5m
+  targetNamespace: monitoring
+  chart:
+    spec:
+      chart: prometheus
+      version: '27.*'
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+      interval: 5m
+  releaseName: prometheus
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  driftDetection:
+    mode: enabled
+  values:
+    configmapReload:
+      prometheus:
+        enabled: false
+    server:
+      retention: 2d
+    extraScrapeConfigs: |
+      - job_name: node
+        static_configs:
+          - targets: ['prometheus-prometheus-node-exporter:9100']
+      - job_name: kube-state-metrics
+        honor_labels: true
+        static_configs:
+          - targets: ['prometheus-kube-state-metrics:8080']
