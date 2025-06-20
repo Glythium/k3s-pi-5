@@ -30,9 +30,6 @@ spec:
     mode: enabled
   values:
     githubConfigUrl: https://github.com/Glythium/k3s-pi-5
-    controllerServiceAccount:
-      namespace: github-arc
-      name: controller-manager
     githubConfigSecret: runner-registration
     containerMode:
       type: "kubernetes"
