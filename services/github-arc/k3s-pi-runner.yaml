@@ -17,7 +17,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: ghcr
-      interval: 5m
+      interval: 1h
   releaseName: k3s-pi-5-runner
   install:
     createNamespace: true

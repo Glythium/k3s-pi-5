@@ -44,7 +44,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: portainer
-      interval: 5m
+      interval: 1h
   releaseName: portainer
   install:
     createNamespace: true

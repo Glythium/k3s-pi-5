@@ -58,7 +58,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: gitlab
-      interval: 5m
+      interval: 1h
   releaseName: gitlab-runner
   install:
     createNamespace: true

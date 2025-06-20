@@ -18,7 +18,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: ghcr
-      interval: 5m
+      interval: 1h
   releaseName: controller-manager
   install:
     createNamespace: true

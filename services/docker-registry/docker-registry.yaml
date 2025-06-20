@@ -44,7 +44,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: twuni
-      interval: 5m
+      interval: 1h
   releaseName: docker-registry
   install:
     createNamespace: true

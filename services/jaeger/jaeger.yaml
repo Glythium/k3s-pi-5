@@ -43,7 +43,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: jaegertracing
-      interval: 5m
+      interval: 1h
   releaseName: jaeger
   install:
     createNamespace: true
