@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: k3s-pi-5-runner
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: github-arc-controller-manager
+  interval: 1h
+  timeout: 5m
+  targetNamespace: github-arc
+  chart:
+    spec:
+      chart: actions/actions-runner-controller-charts/gha-runner-scale-set
+      version: '*'
+      sourceRef:
+        kind: HelmRepository
+        name: ghcr
+      interval: 5m
+  releaseName: k3s-pi-5-runner
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  driftDetection:
+    mode: enabled
+  values:
+    githubConfigUrl: https://github.com/Glythium/k3s-pi-5
+    controllerServiceAccount:
+      namespace: github-arc
+      name: controller-manager
+    githubConfigSecret: runner-registration
+    containerMode:
+      type: "kubernetes"
+      kubernetesModeWorkVolumeClaim:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
