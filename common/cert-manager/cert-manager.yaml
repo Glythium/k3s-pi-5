@@ -42,7 +42,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: jetstack-io
-      interval: 5m
+      interval: 1h
   releaseName: cert-manager
   install:
     createNamespace: true
