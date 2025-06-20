@@ -139,6 +139,3 @@ spec:
           memory: 256Mi
     metrics:
       enabled: true
-      serviceMonitor:
-        enabled: true
-        namespace: monitoring
