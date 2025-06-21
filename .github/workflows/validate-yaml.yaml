@@ -8,7 +8,11 @@ jobs:
       image: harbor.glythium.io/dockerhub/trufflesecurity/trufflehog:latest
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        run: |
+          git clone -b ${{ github.ref_name }} ${{ github.repositoryURL }} ${{ github.repository }}
+          cd ${{ github.repository }}
+          git branch
+          ls
       - name: Scan for plaintext secrets
         run: |
           trufflehog git file://. --since-commit main --branch ${{ github.ref_name }} --fail
