@@ -5,6 +5,7 @@ resources:
 
   # Toggle each of the services off by commenting out the corresponding line below
   # - docker-registry/
+  - github-arc/
   - gitlab-agent/
   - gitlab-runner/
   - harbor/
