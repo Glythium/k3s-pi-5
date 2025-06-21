@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Check out repository code
         run: |
-          git clone -b ${{ github.ref_name }} ${{ github.repositoryURL }} ${{ github.repository }}
+          git clone -b ${{ github.ref_name }} "${{ github.server_url }}/${{ github.repository }}" ${{ github.repository }}
           cd ${{ github.repository }}
           git branch
           ls
