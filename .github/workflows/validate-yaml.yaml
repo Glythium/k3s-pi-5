@@ -1,0 +1,15 @@
+name: Validate YAML
+run-name: Checks for secrets, lints, and diffs YAML
+on: [push]
+jobs:
+  Secret-Scanning:
+    runs-on: k3s-pi-5-runner
+    container:
+      image: harbor.glythium.io/dockerhub/trufflesecurity/trufflehog:latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Scan for plaintext secrets
+        run: |
+          trufflehog git file://. --since-commit main --branch ${{ github.ref_name }} --fail
+          trufflehog filesystem . --only-verified --fail
