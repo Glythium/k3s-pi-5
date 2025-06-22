@@ -1,6 +1,7 @@
 name: Validate YAML
 run-name: Checks for secrets, lints, and diffs YAML
-on: [push]
+on:
+- push
 jobs:
   Secret-Scanning:
     runs-on: k3s-pi-5-runner
