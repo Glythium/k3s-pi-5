@@ -39,7 +39,7 @@ server-side-validation:
   - pi5
   image: ${HARBOR_HOST}/custom/kubectl
   script:
-  - for folder in "common services"; do
+  - for folder in "common" "services"; do
       for yaml in $(find ${folder} -name *.yaml); do
         echo "---"
         echo "${yaml}"
@@ -54,7 +54,7 @@ diff-yaml:
   - pi5
   image: ${HARBOR_HOST}/custom/kubectl
   script:
-  - for folder in "common services"; do
+  - for folder in "common" "services"; do
       for yaml in $(find ${folder} -name *.yaml | grep -v "template"); do
         kubectl diff -f "${yaml}" || true;
       done
