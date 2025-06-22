@@ -27,6 +27,7 @@ jobs:
       - name: Validate YAML Syntax
         run: |
           for yaml in $(find . -name *.yaml); do
+            echo "${yaml}"
             kubectl apply -f "${yaml}" --dry-run=server;
           done
         continue-on-error: true
