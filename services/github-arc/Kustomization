@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - controller-manager.yaml
   - helmRepository.yaml
-  - k3s-pi-5-runner.yaml
+  - k3s-pi-runner.yaml
   - setup.yaml
 transformers:
   - |-
