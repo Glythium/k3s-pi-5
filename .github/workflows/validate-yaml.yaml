@@ -29,13 +29,15 @@ jobs:
       - name: Validate YAML Syntax
         run: |
           cd ${{ github.repository }}
+          status=0
           for folder in "common services"; do
             for yaml in $(find ${folder} -name *.yaml); do
               echo "---"
               echo "${yaml}"
-              kubectl apply -f "${yaml}" --dry-run=server 2>&1 | grep -i -v "last-applied-config" | grep -i -v "server dry run";
+              kubectl apply -f "${yaml}" --dry-run=server 2>&1 | grep -i -v "last-applied-config" | grep -i -v "server dry run" || status=$? && true;
             done
           done
+          exit $status
         continue-on-error: true
       - name: Diff YAML Files
         run: |
