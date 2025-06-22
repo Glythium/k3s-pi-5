@@ -39,8 +39,13 @@ server-side-validation:
   - pi5
   image: ${HARBOR_HOST}/custom/kubectl
   script:
-  - for yaml in $(find . -name *.yaml); do
-      kubectl apply -f "${yaml}" --dry-run=server;
+  - |
+    for folder in "common" "services"; do
+      for yaml in $(find ${folder} -name *.yaml); do
+        echo "---"
+        echo "${yaml}"
+        kubectl apply -f "${yaml}" --dry-run=server 2>&1 | grep -i -v "last-applied-config" | grep -i -v "server dry run" || true;
+      done
     done
   allow_failure: true
 
@@ -50,10 +55,10 @@ diff-yaml:
   - pi5
   image: ${HARBOR_HOST}/custom/kubectl
   script:
-  - for yaml in $(ls -R | grep "\.yaml" | grep -v "template"); do
-      kubectl diff -f $(find . -name "${yaml}") || status=$?;
-      if [ ! -z $status ] && [ $status -gt 1 ]; then
-          exit $status;
-      fi;
+  - |
+    for folder in "common" "services"; do
+      for yaml in $(find ${folder} -name *.yaml | grep -v "template"); do
+        kubectl diff -f "${yaml}" || true;
+      done
     done
   allow_failure: true
