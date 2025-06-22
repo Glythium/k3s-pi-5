@@ -29,7 +29,6 @@ jobs:
       - name: Validate YAML Syntax
         run: |
           cd ${{ github.repository }}
-          status=0
           for folder in "common services"; do
             for yaml in $(find ${folder} -name *.yaml); do
               echo "---"
