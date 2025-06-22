@@ -24,23 +24,22 @@ jobs:
     container:
       image: harbor.glythium.io/custom/kubectl:latest
     steps:
+      - name: Check out repository code
+        run: |
+          git clone -b ${{ github.ref_name }} "${{ github.server_url }}/${{ github.repository }}" ${{ github.repository }}
+          cd ${{ github.repository }}
       - name: Validate YAML Syntax
         run: |
-          ls
           for yaml in $(find ./common -name *.yaml); do
-            echo "${yaml}"
             kubectl apply -f "${yaml}" --dry-run=server;
           done
           for yaml in $(find ./services -name *.yaml); do
-            echo "${yaml}"
             kubectl apply -f "${yaml}" --dry-run=server;
           done
         continue-on-error: true
       - name: Diff YAML Files
         run: |
-          ls
           for yaml in $(ls -R | grep "\.yaml" | grep -v "template"); do
-            echo "${yaml}"
             kubectl diff -f $(find . -name "${yaml}") || status=$?;
             if [ ! -z $status ] && [ $status -gt 1 ]; then
                 exit $status;
