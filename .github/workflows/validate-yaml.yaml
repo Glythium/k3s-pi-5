@@ -11,10 +11,7 @@ jobs:
         run: |
           git clone -b ${{ github.ref_name }} "${{ github.server_url }}/${{ github.repository }}" ${{ github.repository }}
           cd ${{ github.repository }}
-          git branch
-          ls
       - name: Scan for plaintext secrets
         run: |
-          pwd
           trufflehog git file://. --since-commit main --branch ${{ github.ref_name }} --fail
           trufflehog filesystem . --only-verified --fail
