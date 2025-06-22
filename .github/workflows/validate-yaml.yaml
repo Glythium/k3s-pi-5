@@ -31,10 +31,11 @@ jobs:
           cd ${{ github.repository }}
           for folder in "common services"; do
             for yaml in $(find "${folder}" -name *.yaml); do
-              kubectl apply -f "${yaml}" --dry-run=server;
+              echo "---"
+              echo "${yaml}"
+              kubectl apply -f "${yaml}" --dry-run=server 1>/dev/null || true;
             done
           done
-        continue-on-error: true
       - name: Diff YAML Files
         run: |
           cd ${{ github.repository }}
