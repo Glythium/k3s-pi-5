@@ -38,3 +38,26 @@ spec:
         resources:
           requests:
             storage: 1Gi
+    # This block allows the worker Pods to use whatever ServiceAccount is defined in setup/runner-rbac.yaml's ConfigMap
+    template:
+      spec:
+        serviceAccountName: github-arc
+        securityContext:
+          fsGroup: 123  # provides access to /home/runner/_work directory in ephemeral volume
+        containers:
+          - name: runner
+            image: ghcr.io/actions/actions-runner:latest
+            command: ["/home/runner/run.sh"]
+            env:
+              - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
+                value: "false"
+              - name: ACTIONS_RUNNER_CONTAINER_HOOK_TEMPLATE
+                value: /home/runner/runner-pod-rbac-patch/default.yaml
+            volumeMounts:
+              - name: runner-pod-rbac-patch
+                mountPath: /home/runner/runner-pod-rbac-patch
+                readOnly: true
+        volumes:
+          - name: runner-pod-rbac-patch
+            configMap:
+              name: runner-pod-rbac-patch

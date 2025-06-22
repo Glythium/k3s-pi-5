@@ -1,0 +1,46 @@
+name: Validate YAML
+run-name: Checks for secrets, lints, and diffs YAML
+on:
+- push
+jobs:
+  Secret-Scanning:
+    runs-on: k3s-pi-5-runner
+    container:
+      image: harbor.glythium.io/dockerhub/trufflesecurity/trufflehog:latest
+    steps:
+      - name: Check out repository code
+        run: |
+          git clone -b ${{ github.ref_name }} "${{ github.server_url }}/${{ github.repository }}" ${{ github.repository }}
+      - name: Scan for plaintext secrets
+        run: |
+          trufflehog git file://. --since-commit main --branch ${{ github.ref_name }} --fail
+          trufflehog filesystem . --only-verified --fail
+  
+  Validate-YAML-Syntax:
+    needs:
+    - Secret-Scanning
+    runs-on: k3s-pi-5-runner
+    container:
+      image: harbor.glythium.io/custom/kubectl:latest
+    steps:
+      - name: Check out repository code
+        run: |
+          git clone -b ${{ github.ref_name }} "${{ github.server_url }}/${{ github.repository }}" ${{ github.repository }}
+      - name: Validate YAML Syntax
+        run: |
+          cd ${{ github.repository }}
+          for folder in "common" "services"; do
+            for yaml in $(find ${folder} -name *.yaml); do
+              echo "---"
+              echo "${yaml}"
+              kubectl apply -f "${yaml}" --dry-run=server 2>&1 | grep -i -v "last-applied-config" | grep -i -v "server dry run" || true;
+            done
+          done
+      - name: Diff YAML Files
+        run: |
+          cd ${{ github.repository }}
+          for folder in "common" "services"; do
+            for yaml in $(find ${folder} -name *.yaml | grep -v "template"); do
+              kubectl diff -f "${yaml}" || true;
+            done
+          done

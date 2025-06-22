@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: github-arc
+  namespace: github-arc
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: github-arc
+subjects:
+- kind: ServiceAccount
+  name: github-arc
+  namespace: github-arc
+roleRef:
+  kind: ClusterRole
+  name: github-arc
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: github-arc
+rules:
+- apiGroups:
+  - "*"
+  resources:
+  - "*"
+  verbs:
+  - "*"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: runner-pod-rbac-patch
+  namespace: github-arc
+data:
+  default.yaml: |
+    ---
+    apiVersion: v1
+    kind: PodTemplate
+    metadata:
+      name: runner-pod-rbac-patch
+      namespace: github-arc
+    spec:
+      serviceAccountName: github-arc   # <-- use this serviceaccount
+      securityContext:
+        fsGroup: 123  # provides access to /home/runner/_work directory in ephemeral volume
