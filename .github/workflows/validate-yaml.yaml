@@ -29,7 +29,7 @@ jobs:
       - name: Validate YAML Syntax
         run: |
           cd ${{ github.repository }}
-          for folder in "common services"; do
+          for folder in "common" "services"; do
             for yaml in $(find ${folder} -name *.yaml); do
               echo "---"
               echo "${yaml}"
@@ -39,7 +39,7 @@ jobs:
       - name: Diff YAML Files
         run: |
           cd ${{ github.repository }}
-          for folder in "common services"; do
+          for folder in "common" "services"; do
             for yaml in $(find ${folder} -name *.yaml | grep -v "template"); do
               kubectl diff -f "${yaml}" || true;
             done
