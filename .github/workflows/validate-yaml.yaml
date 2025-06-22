@@ -15,3 +15,28 @@ jobs:
         run: |
           trufflehog git file://. --since-commit main --branch ${{ github.ref_name }} --fail
           trufflehog filesystem . --only-verified --fail
+  
+  Validate-YAML-Syntax:
+    needs:
+    - Secret-Scanning
+    runs-on: k3s-pi-5-runner
+    container:
+      image: harbor.glythium.io/custom/kubectl:latest
+    steps:
+      - name: Validate YAML Syntax
+        run: |
+          pwd
+          for yaml in $(find . -name *.yaml); do
+            kubectl apply -f "${yaml}" --dry-run=server;
+          done
+        continue-on-error: true
+      - name: Diff YAML Files
+        run: |
+          pwd
+          for yaml in $(ls -R | grep "\.yaml" | grep -v "template"); do
+            kubectl diff -f $(find . -name "${yaml}") || status=$?;
+            if [ ! -z $status ] && [ $status -gt 1 ]; then
+                exit $status;
+            fi;
+          done
+        continue-on-error: true
