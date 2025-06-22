@@ -39,8 +39,9 @@ jobs:
         continue-on-error: true
       - name: Diff YAML Files
         run: |
+          ls
           for yaml in $(ls -R | grep "\.yaml" | grep -v "template"); do
-            kubectl diff -f ${yaml} || status=$?;
+            kubectl diff -f $(find . -name "${yaml}") || status=$?;
             if [ ! -z $status ] && [ $status -gt 1 ]; then
                 exit $status;
             fi;
