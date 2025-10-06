@@ -40,7 +40,7 @@ spec:
   chart:
     spec:
       chart: keycloak
-      version: '24.*'
+      version: '25.2.0'
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -56,6 +56,9 @@ spec:
   driftDetection:
     mode: enabled
   values:
+    image:
+      repository: keycloak/keycloak
+      tag: 26.3.3
     podLabels:
       sidecar.istio.io/inject: "true"
     production: true
