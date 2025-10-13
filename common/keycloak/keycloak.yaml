@@ -56,13 +56,17 @@ spec:
   driftDetection:
     mode: enabled
   values:
+    global:
+      security:
+        allowInsecureImages: true
     image:
       repository: keycloak/keycloak
       tag: 26.3.3
     podLabels:
       sidecar.istio.io/inject: "true"
     production: true
-    proxy: edge
+    proxyHeaders: "X-Forwarded-For"
+    httpEnabled: true
     auth:
       adminUser: admin
       existingSecret: keycloak-secret
