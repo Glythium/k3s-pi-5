@@ -65,7 +65,7 @@ spec:
     podLabels:
       sidecar.istio.io/inject: "true"
     production: true
-    proxyHeaders: "X-Forwarded-For"
+    proxyHeaders: xforwarded
     httpEnabled: true
     auth:
       adminUser: admin
@@ -84,6 +84,13 @@ spec:
     defaultInitContainers:
       prepareWriteDirs:
         enabled: false
+    command:
+    - /opt/keycloak/bin/kc.sh
+    args:
+    - start
+    containerSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
     cache:
       enabled: false
     pdb:
