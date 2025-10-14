@@ -10,3 +10,35 @@ transformers:
       name: notImportantHere
       namespace: flux-system
     unsetOnly: true
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: StatefulSet
+      metadata:
+        name: keycloak
+      spec:
+        template:
+          spec:
+            containers:
+              - name: keycloak
+                volumeMounts:
+                - mountPath: /opt/keycloak
+                  name: empty-dir
+                  subPath: app-volume-dir
+                - mountPath: /opt/keycloak/conf
+                  name: empty-dir
+                  subPath: app-conf-dir
+                - mountPath: /opt/keycloak/lib/quarkus
+                  name: empty-dir
+                  subPath: app-quarkus-dir
+                - mountPath: /opt/keycloak/data
+                  name: empty-dir
+                  subPath: app-data-dir
+                - mountPath: /opt/keycloak/providers
+                  name: empty-dir
+                  subPath: app-providers-dir
+                - mountPath: /opt/keycloak/themes
+                  name: empty-dir
+                  subPath: app-themes-dir
+                - mountPath: /opt/keycloak/secrets
+                  name: keycloak-secrets

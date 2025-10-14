@@ -81,13 +81,29 @@ spec:
     extraEnvVars:
     - name: KEYCLOAK_HOSTNAME
       value: "https://auth.glythium.io"
+    defaultInitContainers:
+      prepareWriteDirs:
+        enabled: false
     cache:
       enabled: false
     pdb:
       create: false
-    metrics: # Grafana has a dependency on Keycloak in this config, so we cannot add the ServiceMonitors using this Helm chart
-      enabled: false
+    metrics:
+      enabled: true
     postgresql:
       enabled: true
       auth:
+        username: keycloak
+        database: keycloak
         existingSecret: keycloak-postgres-secret
+      image:
+        repository: postgres
+        tag: 17.6
+      postgresqlDataDir: /var/lib/postgresql/data
+      primary:
+        podSecurityContext:
+          fsGroup: 999
+        containerSecurityContext:
+          runAsUser: 999
+          runAsGroup: 999
+          readOnlyRootFilesystem: false
