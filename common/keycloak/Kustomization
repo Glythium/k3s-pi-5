@@ -10,10 +10,14 @@ transformers:
       name: notImportantHere
       namespace: flux-system
     unsetOnly: true
-patches:
-  - patch: |-
-      - op: remove
-        path: /spec/template/spec/containers/0/volumeMounts/3
-    target:
-      kind: StatefulSet
-      name: keycloak
+# patches:
+#   - patch: |-
+#       - op: remove
+#         path: /spec/template/spec/containers/0/volumeMounts/1
+#       - op: remove
+#         path: /spec/template/spec/containers/0/volumeMounts/2
+#       - op: remove
+#         path: /spec/template/spec/containers/0/volumeMounts/3
+#     target:
+#       kind: StatefulSet
+#       name: keycloak

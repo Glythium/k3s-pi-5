@@ -64,8 +64,8 @@ spec:
       tag: 26.3.3
     podLabels:
       sidecar.istio.io/inject: "true"
-    production: true
-    proxyHeaders: xforwarded
+    # production: true
+    # proxyHeaders: xforwarded
     httpEnabled: true
     auth:
       adminUser: admin
@@ -81,16 +81,21 @@ spec:
     extraEnvVars:
     - name: KEYCLOAK_HOSTNAME
       value: "https://auth.glythium.io"
-    defaultInitContainers:
-      prepareWriteDirs:
-        enabled: false
-    command:
-    - /opt/keycloak/bin/kc.sh
-    args:
-    - start
-    containerSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
+    # - name: KC_DB
+    #   value: postgres
+    # defaultInitContainers:
+    #   prepareWriteDirs:
+    #     enabled: false
+    # command:
+    # - /opt/keycloak/bin/kc.sh
+    # args:
+    # - start
+    # podSecurityContext:
+    #   fsGroup: 1000
+    # containerSecurityContext:
+    #   runAsUser: 1000
+    #   runAsGroup: 1000
+    #   readOnlyRootFilesystem: false
     cache:
       enabled: false
     pdb:
