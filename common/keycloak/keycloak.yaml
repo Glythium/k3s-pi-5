@@ -56,13 +56,17 @@ spec:
   driftDetection:
     mode: enabled
   values:
+    global:
+      security:
+        allowInsecureImages: true
     image:
       repository: keycloak/keycloak
       tag: 26.3.3
     podLabels:
       sidecar.istio.io/inject: "true"
-    production: true
-    proxy: edge
+    # production: true
+    # proxyHeaders: xforwarded
+    httpEnabled: true
     auth:
       adminUser: admin
       existingSecret: keycloak-secret
@@ -77,13 +81,41 @@ spec:
     extraEnvVars:
     - name: KEYCLOAK_HOSTNAME
       value: "https://auth.glythium.io"
+    # - name: KC_DB
+    #   value: postgres
+    # defaultInitContainers:
+    #   prepareWriteDirs:
+    #     enabled: false
+    # command:
+    # - /opt/keycloak/bin/kc.sh
+    # args:
+    # - start
+    # podSecurityContext:
+    #   fsGroup: 1000
+    # containerSecurityContext:
+    #   runAsUser: 1000
+    #   runAsGroup: 1000
+    #   readOnlyRootFilesystem: false
     cache:
       enabled: false
     pdb:
       create: false
-    metrics: # Grafana has a dependency on Keycloak in this config, so we cannot add the ServiceMonitors using this Helm chart
-      enabled: false
+    metrics:
+      enabled: true
     postgresql:
       enabled: true
       auth:
+        username: keycloak
+        database: keycloak
         existingSecret: keycloak-postgres-secret
+      image:
+        repository: postgres
+        tag: 17.6
+      postgresqlDataDir: /var/lib/postgresql/data
+      primary:
+        podSecurityContext:
+          fsGroup: 999
+        containerSecurityContext:
+          runAsUser: 999
+          runAsGroup: 999
+          readOnlyRootFilesystem: false
