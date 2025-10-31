@@ -64,44 +64,45 @@ spec:
       tag: 26.3.3
     podLabels:
       sidecar.istio.io/inject: "true"
-    # production: true
-    # proxyHeaders: xforwarded
+    production: true
+    proxyHeaders: xforwarded
     httpEnabled: true
+    usePasswordFiles: false
     auth:
       adminUser: admin
       existingSecret: keycloak-secret
       passwordSecretKey: password
     resources:
       requests:
-        cpu: 250m
-        memory: 256Mi
-      limits:
         cpu: 500m
-        memory: 1Gi
+        memory: 1700Mi
+      limits:
+        cpu: 2000m
+        memory: 2Gi
+    args:
+    - start
     extraEnvVars:
-    - name: KEYCLOAK_HOSTNAME
+    - name: KC_HOSTNAME
       value: "https://auth.glythium.io"
-    # - name: KC_DB
-    #   value: postgres
-    # defaultInitContainers:
-    #   prepareWriteDirs:
-    #     enabled: false
-    # command:
-    # - /opt/keycloak/bin/kc.sh
-    # args:
-    # - start
-    # podSecurityContext:
-    #   fsGroup: 1000
-    # containerSecurityContext:
-    #   runAsUser: 1000
-    #   runAsGroup: 1000
-    #   readOnlyRootFilesystem: false
+    - name: KC_DB
+      value: postgres
+    defaultInitContainers:
+      prepareWriteDirs:
+        enabled: false
+    podSecurityContext:
+      fsGroup: 1000
+    containerSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      readOnlyRootFilesystem: false
+    readinessProbe:
+      initialDelaySeconds: 120
     cache:
       enabled: false
     pdb:
       create: false
     metrics:
-      enabled: true
+      enabled: false
     postgresql:
       enabled: true
       auth:
