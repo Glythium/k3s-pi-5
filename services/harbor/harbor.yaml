@@ -89,10 +89,10 @@ spec:
     jobservice:
       existingSecret: harbor-envvars
     registry:
-      existingSecret: harbor-core-envvars
+      existingSecret: harbor-envvars
       credentials:
         username: registryUser
-        existingSecret: harbor-core-envvars
+        existingSecret: harbor-envvars
     metrics:
       enabled: true
       serviceMonitor:
