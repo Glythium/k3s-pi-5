@@ -103,11 +103,13 @@ spec:
       image:
         repository: ghcr.io/octohelm/harbor/trivy-adapter-photon
     database:
-      image:
-        repository: ghcr.io/octohelm/harbor/harbor-db
+      internal:
+        image:
+          repository: ghcr.io/octohelm/harbor/harbor-db
     redis:
-      image:
-        repository: ghcr.io/octohelm/harbor/redis-photon
+      internal:
+        image:
+          repository: ghcr.io/octohelm/harbor/redis-photon
     exporter:
       image:
         repository: ghcr.io/octohelm/harbor/harbor-exporter
