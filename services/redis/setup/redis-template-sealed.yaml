@@ -1,0 +1,15 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: redis-secret
+  namespace: redis
+spec:
+  encryptedData:
+    redis-password: AgARpaFRfVZm1kUB+zGQmIVI+Z5fIk2e5+jrl3AkrKjIae44f6/csdGpC4p7X1qvfSeRn5iopFxqFV0aRrjm2oeTjRwanKeT+FCRjmPIIKy/K38mwfRtjDpzHWTlHePMznHz9UPYtITpsSkpsTQZeSeylmTa3gU5A7cUh1C6Aa2kTkvpMoTxLdrtes96wjegV958ZGb+rcD9d7tzuumVcuWnR2Rhq6nYE+an9vdZg8s/wYktUErQCbrnB9bE0W+uNEPky/Li70xrZnLsJO8qHH1MOXEyQRt08nBOqHgC/qMwPM7kMuVkupVzc5uYSRkOgx2zTyhrL3JKBbSuWkUUHNHtFaI3jT4/VmLMlZ1URcPWpJbAIDoRNldFkyqcnoxO49kuY1u1KRkgu9oLc9Mu0NPA9LVR0oiVrJdqozvKZoKAKXy0paom/yyjagrUalc+5sel4BXSZEpWGxP1JH7Xl+IzLIpzSSZOYpBr2/2VRcg4Tzcp3kqVITHfGxUsY0R6zBvvtlF31Gk4WvGjQXxjukWRJvrLucA4hvbno7h4d3mwydgfGfiA1neLSjtDcJxcYy6YwfXxcsUYt0J5F99C+27xuaKPWPMMee7btF9SwmR8X3VhqgRXGsTMLP9jKbrTMwba1bGeHzO5eShgS1yOqHqCO7J778wUOUkcCYv6XKFvHu642PR70l3Xlz50j6yFx0uSeGI8Dxohr4XLHFluCI3tvSyKpSw8xzuj8ariR9NvWw==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: redis-secret
+      namespace: redis

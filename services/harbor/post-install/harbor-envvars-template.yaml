@@ -21,6 +21,8 @@ stringData:
   # Run: htpasswd -nbBC10 registryUser <REGISTRY_CREDENTIAL_PASSWORD>
   REGISTRY_HTPASSWD: <htpasswd>
 
+  REDIS_PASSWORD: <random chars>
+
   # These are the default Redis Service endpoints that get created with this chart
   # _REDIS_URL_CORE: redis://harbor-redis-master:6379/0
   # _REDIS_URL_REG: redis://harbor-redis-master:6379/2

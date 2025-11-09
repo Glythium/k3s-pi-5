@@ -106,9 +106,9 @@ spec:
         image:
           repository: ghcr.io/octohelm/harbor/harbor-db
     redis:
-      internal:
-        image:
-          repository: ghcr.io/octohelm/harbor/redis-photon
+      external:
+        addr: redis.redis.svc.cluster.local:6379
+        existingSecret: harbor-envvars
     exporter:
       image:
         repository: ghcr.io/octohelm/harbor/harbor-exporter
