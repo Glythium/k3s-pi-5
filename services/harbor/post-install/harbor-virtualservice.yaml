@@ -21,6 +21,8 @@ kind: VirtualService
 metadata:
   name: harbor
   namespace: harbor
+  labels:
+    virtualService: harbor
 spec:
   hosts:
   - harbor.glythium.io

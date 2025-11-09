@@ -1,0 +1,72 @@
+# Source: https://github.com/istio/istio/issues/26152#issuecomment-1802077934
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: limit-request-size
+  namespace: harbor
+spec:
+  workloadSelector:
+    labels:
+      virtualService: harbor
+  configPatches:
+  - applyTo: HTTP_FILTER
+    match:
+      context: SIDECAR_INBOUND
+      listener:
+        filterChain:
+          filter:
+            name: envoy.filters.network.http_connection_manager
+    patch:
+      operation: INSERT_BEFORE
+      value:
+        name: envoy.filters.http.buffer
+        typed_config:
+          '@type': type.googleapis.com/envoy.extensions.filters.http.buffer.v3.Buffer
+          max_request_bytes: 1048576  # 1 MB
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: EnvoyFilter
+# metadata:
+#   name: limit-request-size
+#   namespace: istio-ingress
+# spec:
+#   workloadSelector: {}
+#   configPatches:
+#   - applyTo: HTTP_FILTER
+#     match:
+#       context: GATEWAY
+#       listener:
+#         filterChain:
+#           filter:
+#             name: envoy.filters.network.http_connection_manager
+#     patch:
+#       operation: INSERT_BEFORE
+#       value:
+#         name: envoy.filters.http.buffer
+#         typed_config:
+#           '@type': type.googleapis.com/envoy.extensions.filters.http.buffer.v3.Buffer
+#           max_request_bytes: 1048576  # 1 MB
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: EnvoyFilter
+# metadata:
+#   name: limit-request-size
+#   namespace: istio-system
+# spec:
+#   workloadSelector: {}
+#   configPatches:
+#   - applyTo: HTTP_FILTER
+#     match:
+#       context: GATEWAY
+#       listener:
+#         filterChain:
+#           filter:
+#             name: envoy.filters.network.http_connection_manager
+#     patch:
+#       operation: INSERT_BEFORE
+#       value:
+#         name: envoy.filters.http.buffer
+#         typed_config:
+#           '@type': type.googleapis.com/envoy.extensions.filters.http.buffer.v3.Buffer
+#           max_request_bytes: 1048576  # 1 MB
