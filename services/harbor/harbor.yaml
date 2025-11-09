@@ -72,9 +72,12 @@ spec:
     mode: enabled
   values:
     expose:
-      type: clusterIP
       tls:
         enabled: false
+      ingress:
+        hosts:
+          core: harbor.glythium.io
+      
     externalURL: https://harbor.glythium.io
     existingSecretAdminPassword: harbor-envvars
     # If using existingSecretSecretKey, the key must be secretKey
@@ -93,7 +96,7 @@ spec:
     metrics:
       enabled: true
       serviceMonitor:
-        enabled: true
+        enabled: false
     # trace:
     #   enabled: false
       # attributes:
