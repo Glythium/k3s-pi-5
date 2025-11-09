@@ -95,8 +95,12 @@ spec:
         repository: ghcr.io/octohelm/harbor/harbor-jobservice
       existingSecret: harbor-envvars
     registry:
-      image:
-        repository: ghcr.io/octohelm/harbor/registry-photon
+      registry:
+        image:
+          repository:  ghcr.io/octohelm/harbor/registry-photon
+      controller:
+        image:
+          repository:  ghcr.io/octohelm/harbor/harbor-registryctl
       existingSecret: harbor-envvars
       credentials:
         username: registryUser
