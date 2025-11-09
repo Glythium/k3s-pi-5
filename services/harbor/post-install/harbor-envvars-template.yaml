@@ -18,7 +18,7 @@ stringData:
 
   REGISTRY_PASSWD: <random chars>
   REGISTRY_HTTP_SECRET: <same as REGISTRY_PASSWD>
-  # Run: htpasswd -nbBC10 registryUser <REGISTRY_CREDENTIAL_PASSWORD>
+  # Run: htpasswd -nbBC10 registryUser <REGISTRY_PASSWD>
   REGISTRY_HTPASSWD: <htpasswd>
 
   REDIS_PASSWORD: <random chars>
