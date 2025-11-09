@@ -1,19 +1,19 @@
-# ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: harbor
-#   namespace: flux-system
-# spec:
-#   force: false
-#   interval: 1h
-#   path: ./services/harbor
-#   prune: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: initial-git-source
-#   timeout: 5m
-#   suspend: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: harbor
+  namespace: flux-system
+spec:
+  force: false
+  interval: 1h
+  path: ./services/harbor
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: initial-git-source
+  timeout: 5m
+  suspend: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -29,6 +29,15 @@ spec:
     kind: GitRepository
     name: initial-git-source
   timeout: 5m
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: harbor
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://helm.goharbor.io
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -46,10 +55,10 @@ spec:
   chart:
     spec:
       chart: harbor
-      version: '26.*'
+      version: '1.*'
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: harbor
       interval: 1h
   releaseName: harbor
   install:
@@ -62,80 +71,37 @@ spec:
   driftDetection:
     mode: enabled
   values:
-    service:
-      type: ClusterIP
-    exposureType: ingress
+    expose:
+      type: clusterIP
+      tls:
+        enabled: false
     externalURL: https://harbor.glythium.io
-    ingress:
-      core:
-        hostname: harbor.glythium.io
+    existingSecretAdminPassword: harbor-envvars
+    # If using existingSecretSecretKey, the key must be secretKey
+    existingSecretSecretKey: harbor-core-secret
+    # harborAdminPassword: ""
+    # secretKey: ""
     core:
       existingSecret: harbor-core-secret
-      existingEnvVarsSecret: harbor-envvars
-      podLabels:
-        sidecar.istio.io/inject: "true"
-      resources:
-        requests:
-          cpu: 25m
-          memory: 50Mi
-        limits:
-          cpu: 100m
-          memory: 256Mi
     jobservice:
-      redisNamespace: harbor
-      existingSecret: harbor-core-secret
-      existingEnvVarsSecret: harbor-envvars
-      resources:
-        requests:
-          cpu: 25m
-          memory: 50Mi
-        limits:
-          cpu: 100m
-          memory: 256Mi
-    portal:
-      podLabels:
-        sidecar.istio.io/inject: "true"
-      resources:
-        requests:
-          cpu: 25m
-          memory: 50Mi
-        limits:
-          cpu: 100m
-          memory: 256Mi
-    registry:
       existingSecret: harbor-envvars
-      # Hardcode the username here, the registry Pod seems to disregard the envvars Secret
+    registry:
+      existingSecret: harbor-core-envvars
       credentials:
         username: registryUser
-      # Fixes an issue when pushing images to Harbor
-      relativeurls: true
-      resources:
-        requests:
-          cpu: 25m
-          memory: 50Mi
-        limits:
-          cpu: 100m
-          memory: 256Mi
-    postgresql:
-      auth:
-        existingSecret: harbor-envvars
-      primary:
-        # Just reducing the number here because I don't expect to have that many connections
-        extendedConfiguration: |
-          max_connections = 256
-    redis:
-      # The default bitnami image does not work on arm64 due to a jemalloc error
-      image:
-        repository: redis
-        tag: 7-bookworm
-    trivy:
-      existingEnvVarsSecret: harbor-envvars
-      resources:
-        requests:
-          cpu: 25m
-          memory: 50Mi
-        limits:
-          cpu: 100m
-          memory: 256Mi
+        existingSecret: harbor-core-envvars
     metrics:
       enabled: true
+      serviceMonitor:
+        enabled: true
+    # trace:
+    #   enabled: false
+      # attributes:
+      #   application: harbor
+      # jaeger:
+        # # jaeger supports two modes:
+        # #   collector mode(uncomment endpoint and uncomment username, password if needed)
+        # #   agent mode(uncomment agent_host and agent_port)
+        # endpoint: http://jaeger.tracing:14268/api/traces
+        # agent_host: hostname
+        # agent_port: 6831
