@@ -12,6 +12,7 @@ resources:
   # - jaeger/
   # - kpack/
   # - portainer/
+  - redis/
 transformers:
   - |-
     apiVersion: builtin
