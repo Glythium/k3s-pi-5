@@ -85,14 +85,32 @@ spec:
     # harborAdminPassword: ""
     # secretKey: ""
     core:
+      image:
+        repository: ghcr.io/octohelm/harbor/harbor-core
       existingSecret: harbor-core-secret
     jobservice:
+      image:
+        repository: ghcr.io/octohelm/harbor/harbor-jobservice
       existingSecret: harbor-envvars
     registry:
+      image:
+        repository: ghcr.io/octohelm/harbor/registry-photon
       existingSecret: harbor-envvars
       credentials:
         username: registryUser
         existingSecret: harbor-envvars
+    trivy:
+      image:
+        repository: ghcr.io/octohelm/harbor/trivy-adapter-photon
+    database:
+      image:
+        repository: ghcr.io/octohelm/harbor/harbor-db
+    redis:
+      image:
+        repository: ghcr.io/octohelm/harbor/redis-photon
+    exporter:
+      image:
+        repository: ghcr.io/octohelm/harbor/harbor-exporter
     metrics:
       enabled: true
       serviceMonitor:
