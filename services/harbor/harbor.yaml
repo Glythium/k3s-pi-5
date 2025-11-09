@@ -105,6 +105,7 @@ spec:
       credentials:
         username: registryUser
         existingSecret: harbor-envvars
+      relativeurls: true
     trivy:
       image:
         repository: ghcr.io/octohelm/harbor/trivy-adapter-photon

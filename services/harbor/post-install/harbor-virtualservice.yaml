@@ -37,7 +37,7 @@ spec:
     - uri:
         prefix: "/service/"
     - uri:
-        prefix: "/v2"
+        prefix: "/v2/"
     - uri:
         prefix: "/chartrepo/"
     - uri:
