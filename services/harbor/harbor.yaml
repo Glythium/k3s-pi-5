@@ -83,6 +83,9 @@ spec:
     existingSecretSecretKey: harbor-core-secret
     # harborAdminPassword: ""
     # secretKey: ""
+    portal:
+      image:
+        repository: ghcr.io/octohelm/harbor/harbor-portal
     core:
       image:
         repository: ghcr.io/octohelm/harbor/harbor-core
@@ -106,6 +109,7 @@ spec:
         image:
           repository: ghcr.io/octohelm/harbor/harbor-db
     redis:
+      type: external
       external:
         addr: redis.redis.svc.cluster.local:6379
         existingSecret: harbor-envvars
