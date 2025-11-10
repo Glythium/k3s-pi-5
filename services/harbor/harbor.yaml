@@ -91,7 +91,7 @@ spec:
         repository: ghcr.io/octohelm/harbor/harbor-core
       existingSecret: harbor-core-secret
       podLabels:
-        sidecar.istio.io/inject: true
+        sidecar.istio.io/inject: "true"
     jobservice:
       image:
         repository: ghcr.io/octohelm/harbor/harbor-jobservice
@@ -109,7 +109,7 @@ spec:
         existingSecret: harbor-envvars
       relativeurls: true
       podLabels:
-        sidecar.istio.io/inject: true
+        sidecar.istio.io/inject: "true"
     trivy:
       image:
         repository: ghcr.io/octohelm/harbor/trivy-adapter-photon
