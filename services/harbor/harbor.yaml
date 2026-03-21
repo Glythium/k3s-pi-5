@@ -72,37 +72,45 @@ spec:
     mode: enabled
   values:
     expose:
+      type: ingress
       tls:
         enabled: false
-      ingress:
-        hosts:
-          core: harbor.glythium.io
+        # auto:
+        #   commonName: harbor.glythium.io
+      # ingress:
+      #   hosts:
+      #     core: harbor.glythium.io
     externalURL: https://harbor.glythium.io
     existingSecretAdminPassword: harbor-envvars
     # If using existingSecretSecretKey, the key must be secretKey
     existingSecretSecretKey: harbor-core-secret
     # harborAdminPassword: ""
     # secretKey: ""
-    portal:
-      image:
-        repository: ghcr.io/octohelm/harbor/harbor-portal
+    nginx:
+      # image:
+      #   repository: ghcr.io/octohelm/harbor/nginx-photon
+      podLabels:
+        sidecar.istio.io/inject: "true"
+    # portal:
+    #   image:
+    #     repository: ghcr.io/octohelm/harbor/harbor-portal
     core:
-      image:
-        repository: ghcr.io/octohelm/harbor/harbor-core
+      # image:
+      #   repository: ghcr.io/octohelm/harbor/harbor-core
       existingSecret: harbor-core-secret
       podLabels:
         sidecar.istio.io/inject: "true"
     jobservice:
-      image:
-        repository: ghcr.io/octohelm/harbor/harbor-jobservice
+      # image:
+      #   repository: ghcr.io/octohelm/harbor/harbor-jobservice
       existingSecret: harbor-envvars
     registry:
-      registry:
-        image:
-          repository:  ghcr.io/octohelm/harbor/registry-photon
-      controller:
-        image:
-          repository:  ghcr.io/octohelm/harbor/harbor-registryctl
+      # registry:
+      #   image:
+      #     repository:  ghcr.io/octohelm/harbor/registry-photon
+      # controller:
+      #   image:
+      #     repository:  ghcr.io/octohelm/harbor/harbor-registryctl
       existingSecret: harbor-envvars
       credentials:
         username: registryUser
@@ -111,20 +119,20 @@ spec:
       podLabels:
         sidecar.istio.io/inject: "true"
     trivy:
-      image:
-        repository: ghcr.io/octohelm/harbor/trivy-adapter-photon
-    database:
-      internal:
-        image:
-          repository: ghcr.io/octohelm/harbor/harbor-db
+      # image:
+      #   repository: ghcr.io/octohelm/harbor/trivy-adapter-photon
+    # database:
+    #   internal:
+    #     image:
+    #       repository: ghcr.io/octohelm/harbor/harbor-db
     redis:
       type: external
       external:
         addr: redis.redis.svc.cluster.local:6379
         existingSecret: harbor-envvars
-    exporter:
-      image:
-        repository: ghcr.io/octohelm/harbor/harbor-exporter
+    # exporter:
+    #   image:
+    #     repository: ghcr.io/octohelm/harbor/harbor-exporter
     metrics:
       enabled: true
       serviceMonitor:
