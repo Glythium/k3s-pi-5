@@ -118,7 +118,7 @@ spec:
       relativeurls: true
       podLabels:
         sidecar.istio.io/inject: "true"
-    trivy:
+    # trivy:
       # image:
       #   repository: ghcr.io/octohelm/harbor/trivy-adapter-photon
     # database:
