@@ -91,26 +91,30 @@ spec:
       #   repository: ghcr.io/octohelm/harbor/nginx-photon
       podLabels:
         sidecar.istio.io/inject: "true"
-    # portal:
-    #   image:
-    #     repository: ghcr.io/octohelm/harbor/harbor-portal
+    portal:
+      image:
+        repository: dhi.io/harbor-portal
+        tag: 2.14
     core:
       # image:
-      #   repository: ghcr.io/octohelm/harbor/harbor-core
+      #   repository: dhi.io/harbor-core
+      #   tag: 2.14.3
       existingSecret: harbor-core-secret
       podLabels:
         sidecar.istio.io/inject: "true"
     jobservice:
-      # image:
-      #   repository: ghcr.io/octohelm/harbor/harbor-jobservice
+      image:
+        repository: dhi.io/harbor-jobservice
+        tag: 2.14
       existingSecret: harbor-envvars
     registry:
       # registry:
       #   image:
       #     repository:  ghcr.io/octohelm/harbor/registry-photon
-      # controller:
-      #   image:
-      #     repository:  ghcr.io/octohelm/harbor/harbor-registryctl
+      controller:
+        image:
+          repository: dhi.io/harbor-registryctl
+          tag: 2.14
       existingSecret: harbor-envvars
       credentials:
         username: registryUser
@@ -126,10 +130,11 @@ spec:
     #     image:
     #       repository: ghcr.io/octohelm/harbor/harbor-db
     redis:
-      type: external
-      external:
-        addr: redis.redis.svc.cluster.local:6379
-        existingSecret: harbor-envvars
+      type: internal
+      internal:
+        image:
+          repository: dhi.io/harbor-redis
+          tag: 2.14
     # exporter:
     #   image:
     #     repository: ghcr.io/octohelm/harbor/harbor-exporter
