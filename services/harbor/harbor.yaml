@@ -87,33 +87,35 @@ spec:
     # harborAdminPassword: ""
     # secretKey: ""
     nginx:
-      # image:
-      #   repository: ghcr.io/octohelm/harbor/nginx-photon
+      image:
+        registry: ghcr.io
       podLabels:
         sidecar.istio.io/inject: "true"
     portal:
       image:
-        repository: dhi.io/harbor-portal
+        registry: ghcr.io
+        # repository: dhi.io/harbor-portal
         tag: 2.14
     core:
-      # image:
-      #   repository: dhi.io/harbor-core
-      #   tag: 2.14.3
+      image:
+        registry: ghcr.io
+        # repository: dhi.io/harbor-core
+        tag: 2.14
       existingSecret: harbor-core-secret
       podLabels:
         sidecar.istio.io/inject: "true"
     jobservice:
       image:
-        repository: dhi.io/harbor-jobservice
+        registry: ghcr.io
         tag: 2.14
       existingSecret: harbor-envvars
     registry:
-      # registry:
-      #   image:
-      #     repository:  ghcr.io/octohelm/harbor/registry-photon
+      registry:
+        image:
+          registry: ghcr.io
       controller:
         image:
-          repository: dhi.io/harbor-registryctl
+          registry: ghcr.io
           tag: 2.14
       existingSecret: harbor-envvars
       credentials:
@@ -122,22 +124,21 @@ spec:
       relativeurls: true
       podLabels:
         sidecar.istio.io/inject: "true"
-    # trivy:
-      # image:
-      #   repository: ghcr.io/octohelm/harbor/trivy-adapter-photon
-    # database:
-    #   internal:
-    #     image:
-    #       repository: ghcr.io/octohelm/harbor/harbor-db
-    redis:
-      type: internal
+    trivy:
+      image:
+        registry: ghcr.io
+    database:
       internal:
         image:
-          repository: dhi.io/harbor-redis
-          tag: 2.14
-    # exporter:
-    #   image:
-    #     repository: ghcr.io/octohelm/harbor/harbor-exporter
+          registry: ghcr.io
+    redis:
+      type: external
+      external:
+        addr: redis.redis.svc.cluster.local:6379
+        existingSecret: harbor-envvars
+    exporter:
+      image:
+        registry: ghcr.io
     metrics:
       enabled: true
       serviceMonitor:
